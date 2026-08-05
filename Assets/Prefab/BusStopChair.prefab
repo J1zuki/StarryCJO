@@ -1,0 +1,885 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5144770562278908292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5498923612441463571}
+  m_Layer: 0
+  m_Name: BusStopChair
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5498923612441463571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5144770562278908292}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -308.49, y: 11.15, z: 524.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1409996981924620103}
+  - {fileID: 646461567394127644}
+  - {fileID: 7481256364657292375}
+  - {fileID: 6853582553004758710}
+  - {fileID: 8986417366417243909}
+  - {fileID: 160653500922906790}
+  - {fileID: 6982296926285097458}
+  - {fileID: 8701059193072513225}
+  - {fileID: 2303988538026506521}
+  - {fileID: 1604255650784051721}
+  - {fileID: 4514420607228348432}
+  - {fileID: 1357486197339757739}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &409960604729847629
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -96.44
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.074772835
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -139.112
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &160653500922906790 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 409960604729847629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1112961007212656887
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.659973
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &646461567394127644 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 1112961007212656887}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1281783712246719970
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.1500244
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &1604255650784051721 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 1281783712246719970}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1449008671534088364
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.917236
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.046578407
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.659973
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &1409996981924620103 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 1449008671534088364}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1539241496750062400
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &1357486197339757739 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 1539241496750062400}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1761980728932392690
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.917236
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.046578407
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.1500244
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &2303988538026506521 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 1761980728932392690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4119888635517595643
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.917236
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.046578407
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &4514420607228348432 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 4119888635517595643}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6383404387927372125
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -100.76001
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.074772835
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -139.112
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &6853582553004758710 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 6383404387927372125}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6942433497642062780
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -100.03
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -118.91
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &7481256364657292375 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 6942433497642062780}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7452511197594324505
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -92.130005
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -118.91
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &6982296926285097458 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 7452511197594324505}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8880134772996577518
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -95.70999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -118.91
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &8986417366417243909 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 8880134772996577518}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &9172396758377338658
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5498923612441463571}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.009999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -92.860016
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.074772835
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -139.112
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2462d081cd06e8f4c8a8c90fa8ff1cbd, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+      propertyPath: m_Name
+      value: BusStopChair
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+--- !u!4 &8701059193072513225 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff917c6aa69b2f41904bbe9cc363e30, type: 3}
+  m_PrefabInstance: {fileID: 9172396758377338658}
+  m_PrefabAsset: {fileID: 0}
