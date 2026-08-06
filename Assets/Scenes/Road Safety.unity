@@ -1937,7 +1937,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1527333958664254551, guid: 740edfd4d82049f47bd065a707e69f7e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -307.3
+      value: -306.8297
       objectReference: {fileID: 0}
     - target: {fileID: 1527333958664254551, guid: 740edfd4d82049f47bd065a707e69f7e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1945,23 +1945,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1527333958664254551, guid: 740edfd4d82049f47bd065a707e69f7e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 448.48
+      value: 448.8524
       objectReference: {fileID: 0}
     - target: {fileID: 1527333958664254551, guid: 740edfd4d82049f47bd065a707e69f7e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 0.8554983
       objectReference: {fileID: 0}
     - target: {fileID: 1527333958664254551, guid: 740edfd4d82049f47bd065a707e69f7e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1527333958664254551, guid: 740edfd4d82049f47bd065a707e69f7e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.5178055
       objectReference: {fileID: 0}
     - target: {fileID: 1527333958664254551, guid: 740edfd4d82049f47bd065a707e69f7e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1527333958664254551, guid: 740edfd4d82049f47bd065a707e69f7e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1969,7 +1969,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1527333958664254551, guid: 740edfd4d82049f47bd065a707e69f7e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 62.37
       objectReference: {fileID: 0}
     - target: {fileID: 1527333958664254551, guid: 740edfd4d82049f47bd065a707e69f7e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -2013,7 +2013,8 @@ MonoBehaviour:
   agent: {fileID: 877547182}
   officerStopPoint: {fileID: 2134786150}
   stoppingDistance: 1.5
-  searchRadius: 0.5
+  stopPointSearchRadius: 2
+  drawPath: 1
 --- !u!195 &877547182
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2027,13 +2028,13 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 90
-  m_StoppingDistance: 1.5
+  m_AngularSpeed: 360
+  m_StoppingDistance: 0.3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 3.7308257
-  m_BaseOffset: 1.8654128
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!64 &877547183
@@ -3311,7 +3312,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.06666667
   m_MinRegionArea: 1
   m_NavMeshData: {fileID: 23800000, guid: 7b207dae17d66bb4bb86d0a8bdf35fd1, type: 2}
   m_BuildHeightMesh: 0
@@ -4569,7 +4570,7 @@ Transform:
   m_GameObject: {fileID: 2134786149}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -307.88, y: 10.57678, z: 440.6056}
+  m_LocalPosition: {x: -307.88, y: 10.76, z: 452.02}
   m_LocalScale: {x: 4, y: 2, z: 6.2522}
   m_ConstrainProportionsScale: 0
   m_Children: []

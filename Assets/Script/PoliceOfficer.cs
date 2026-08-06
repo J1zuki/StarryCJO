@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class PoliceOfficer : MonoBehaviour
 {
     [Header("References")]
@@ -9,13 +10,16 @@ public class PoliceOfficer : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float stoppingDistance = 0.3f;
-    [SerializeField] private float searchRadius = 0.5f;
+    [SerializeField] private float stopPointSearchRadius = 2f;
+
+    [Header("Debug")]
+    [SerializeField] private bool drawPath = true;
 
     private Animator officerAnimator;
+    private NavMeshPath calculatedPath;
 
     private bool activated;
     private bool stopped;
-    private bool pathCalculated;
 
     private Vector3 destination;
 
@@ -25,17 +29,10 @@ public class PoliceOfficer : MonoBehaviour
             agent = GetComponent<NavMeshAgent>();
 
         officerAnimator = GetComponentInChildren<Animator>();
+        calculatedPath = new NavMeshPath();
 
-        // Prevent the walking animation from physically moving the officer.
         if (officerAnimator != null)
             officerAnimator.applyRootMotion = false;
-
-        if (agent == null)
-        {
-            Debug.LogError("NavMeshAgent is missing.", gameObject);
-            enabled = false;
-            return;
-        }
 
         agent.updatePosition = true;
         agent.updateRotation = true;
@@ -52,7 +49,7 @@ public class PoliceOfficer : MonoBehaviour
         if (officerStopPoint == null)
         {
             Debug.LogError(
-                "OfficerStopPoint is not assigned.",
+                "OfficerStopPoint has not been assigned.",
                 gameObject
             );
 
@@ -62,60 +59,90 @@ public class PoliceOfficer : MonoBehaviour
         if (!agent.isOnNavMesh)
         {
             Debug.LogError(
-                "The officer is not standing on the NavMesh.",
+                "Police officer is not standing on a baked NavMesh.",
                 gameObject
             );
 
             return false;
         }
 
-        NavMeshHit hit;
+        NavMeshHit stopPointHit;
 
-        if (!NavMesh.SamplePosition(
+        bool stopPointFound = NavMesh.SamplePosition(
             officerStopPoint.position,
-            out hit,
-            searchRadius,
-            agent.areaMask))
+            out stopPointHit,
+            stopPointSearchRadius,
+            agent.areaMask
+        );
+
+        if (!stopPointFound)
         {
             Debug.LogError(
-                "OfficerStopPoint is not on the NavMesh.",
+                "No NavMesh was found near OfficerStopPoint. " +
+                "Move the stop point onto the cyan NavMesh.",
                 officerStopPoint.gameObject
             );
 
             return false;
         }
 
-        destination = hit.position;
+        destination = stopPointHit.position;
 
-        activated = true;
-        stopped = false;
-        pathCalculated = false;
+        calculatedPath.ClearCorners();
 
-        agent.ResetPath();
-        agent.isStopped = false;
-        agent.velocity = Vector3.zero;
+        bool pathFound = agent.CalculatePath(
+            destination,
+            calculatedPath
+        );
 
-        if (!agent.SetDestination(destination))
+        if (!pathFound)
         {
-            activated = false;
-            agent.isStopped = true;
-
             Debug.LogError(
-                "The officer could not create a path.",
+                "Unity could not calculate a path to OfficerStopPoint.",
                 gameObject
             );
 
             return false;
         }
 
-        Debug.Log("Officer position: " + transform.position);
-        Debug.Log("Officer destination: " + destination);
+        if (calculatedPath.status != NavMeshPathStatus.PathComplete)
+        {
+            Debug.LogError(
+                "The path to OfficerStopPoint is not complete. " +
+                "The officer's NavMesh and the destination NavMesh " +
+                "are probably disconnected. Path status: " +
+                calculatedPath.status,
+                gameObject
+            );
+
+            DrawCalculatedPath(Color.red);
+
+            return false;
+        }
+
+        activated = true;
+        stopped = false;
+
+        agent.ResetPath();
+        agent.isStopped = false;
+        agent.SetPath(calculatedPath);
+
+        Debug.Log(
+            "Officer moving from " +
+            agent.transform.position +
+            " to " +
+            destination
+        );
+
+        DrawCalculatedPath(Color.green);
 
         return true;
     }
 
     private void Update()
     {
+        UpdateAnimation();
+
         if (!activated || stopped)
             return;
 
@@ -125,26 +152,24 @@ public class PoliceOfficer : MonoBehaviour
         if (agent.pathPending)
             return;
 
-        if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
+        if (agent.pathStatus != NavMeshPathStatus.PathComplete)
         {
-            Debug.LogError("Officer path is invalid.", gameObject);
+            Debug.LogError(
+                "Officer lost the complete path. Current status: " +
+                agent.pathStatus,
+                gameObject
+            );
+
             StopOfficer();
             return;
         }
 
-        pathCalculated = true;
-
-        if (!pathCalculated)
+        if (float.IsInfinity(agent.remainingDistance))
             return;
 
-        float distance = Vector3.Distance(
-            agent.nextPosition,
-            destination
-        );
-
         bool reachedDestination =
-            agent.remainingDistance <= stoppingDistance ||
-            distance <= stoppingDistance;
+            agent.remainingDistance <= agent.stoppingDistance &&
+            (!agent.hasPath || agent.velocity.sqrMagnitude <= 0.01f);
 
         if (reachedDestination)
             StopOfficer();
@@ -156,34 +181,58 @@ public class PoliceOfficer : MonoBehaviour
             return;
 
         stopped = true;
+        activated = false;
 
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
         agent.ResetPath();
 
-        // Lock the officer exactly onto the stop point.
-        NavMeshHit hit;
+        NavMeshHit finalPosition;
 
         if (NavMesh.SamplePosition(
             destination,
-            out hit,
-            searchRadius,
+            out finalPosition,
+            stopPointSearchRadius,
             agent.areaMask))
         {
-            agent.Warp(hit.position);
-            transform.position = hit.position;
+            agent.Warp(finalPosition.position);
         }
 
-        if (officerAnimator != null)
+        UpdateAnimation();
+
+        Debug.Log(
+            "Officer stopped at: " +
+            transform.position
+        );
+    }
+
+    private void UpdateAnimation()
+    {
+        if (officerAnimator == null)
+            return;
+
+        float movementSpeed = agent.velocity.magnitude;
+
+        if (HasAnimatorParameter("Speed"))
+            officerAnimator.SetFloat("Speed", movementSpeed);
+    }
+
+    private void DrawCalculatedPath(Color colour)
+    {
+        if (!drawPath || calculatedPath == null)
+            return;
+
+        Vector3[] corners = calculatedPath.corners;
+
+        for (int i = 0; i < corners.Length - 1; i++)
         {
-            officerAnimator.applyRootMotion = false;
-
-            // Replace "Speed" if your Animator uses another parameter.
-            if (HasAnimatorParameter("Speed"))
-                officerAnimator.SetFloat("Speed", 0f);
+            Debug.DrawLine(
+                corners[i],
+                corners[i + 1],
+                colour,
+                10f
+            );
         }
-
-        Debug.Log("Officer stopped at: " + transform.position);
     }
 
     private bool HasAnimatorParameter(string parameterName)
@@ -199,5 +248,21 @@ public class PoliceOfficer : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (officerStopPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(
+            officerStopPoint.position,
+            stopPointSearchRadius
+        );
+
+        Gizmos.DrawLine(
+            transform.position,
+            officerStopPoint.position
+        );
     }
 }
