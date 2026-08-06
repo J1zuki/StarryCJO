@@ -7,21 +7,27 @@ public class PoliceOfficer : MonoBehaviour
     [Header("References")]
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Transform officerStopPoint;
+    [SerializeField] private Transform player;
 
     [Header("Movement")]
     [SerializeField] private float stoppingDistance = 0.3f;
     [SerializeField] private float stopPointSearchRadius = 2f;
 
-    [Header("Debug")]
-    [SerializeField] private bool drawPath = true;
+    [Header("Officer Rotation")]
+    [SerializeField] private bool facePlayerAfterStopping = true;
+    [SerializeField] private float rotationSpeed = 5f;
 
     private Animator officerAnimator;
     private NavMeshPath calculatedPath;
 
     private bool activated;
     private bool stopped;
+    private bool canInteract;
 
     private Vector3 destination;
+
+    public bool CanInteract => canInteract;
+    public bool HasStopped => stopped;
 
     private void Awake()
     {
@@ -41,9 +47,51 @@ public class PoliceOfficer : MonoBehaviour
         agent.isStopped = true;
     }
 
+    private void Update()
+    {
+        UpdateAnimation();
+
+        if (stopped)
+        {
+            FacePlayer();
+            return;
+        }
+
+        if (!activated)
+            return;
+
+        if (!agent.isOnNavMesh)
+            return;
+
+        if (agent.pathPending)
+            return;
+
+        if (agent.pathStatus != NavMeshPathStatus.PathComplete)
+        {
+            Debug.LogError(
+                "Officer path is no longer complete.",
+                gameObject
+            );
+
+            StopOfficer();
+            return;
+        }
+
+        if (float.IsInfinity(agent.remainingDistance))
+            return;
+
+        bool reachedDestination =
+            agent.remainingDistance <= agent.stoppingDistance &&
+            (!agent.hasPath ||
+             agent.velocity.sqrMagnitude <= 0.01f);
+
+        if (reachedDestination)
+            StopOfficer();
+    }
+
     public bool InterceptPlayer()
     {
-        if (activated)
+        if (activated || stopped)
             return false;
 
         if (officerStopPoint == null)
@@ -59,7 +107,7 @@ public class PoliceOfficer : MonoBehaviour
         if (!agent.isOnNavMesh)
         {
             Debug.LogError(
-                "Police officer is not standing on a baked NavMesh.",
+                "Police officer is not standing on a NavMesh.",
                 gameObject
             );
 
@@ -78,8 +126,7 @@ public class PoliceOfficer : MonoBehaviour
         if (!stopPointFound)
         {
             Debug.LogError(
-                "No NavMesh was found near OfficerStopPoint. " +
-                "Move the stop point onto the cyan NavMesh.",
+                "No NavMesh was found near OfficerStopPoint.",
                 officerStopPoint.gameObject
             );
 
@@ -95,84 +142,28 @@ public class PoliceOfficer : MonoBehaviour
             calculatedPath
         );
 
-        if (!pathFound)
+        if (!pathFound ||
+            calculatedPath.status != NavMeshPathStatus.PathComplete)
         {
             Debug.LogError(
-                "Unity could not calculate a path to OfficerStopPoint.",
-                gameObject
-            );
-
-            return false;
-        }
-
-        if (calculatedPath.status != NavMeshPathStatus.PathComplete)
-        {
-            Debug.LogError(
-                "The path to OfficerStopPoint is not complete. " +
-                "The officer's NavMesh and the destination NavMesh " +
-                "are probably disconnected. Path status: " +
+                "The officer does not have a complete path to " +
+                "OfficerStopPoint. Path status: " +
                 calculatedPath.status,
                 gameObject
             );
-
-            DrawCalculatedPath(Color.red);
 
             return false;
         }
 
         activated = true;
         stopped = false;
+        canInteract = false;
 
         agent.ResetPath();
         agent.isStopped = false;
         agent.SetPath(calculatedPath);
 
-        Debug.Log(
-            "Officer moving from " +
-            agent.transform.position +
-            " to " +
-            destination
-        );
-
-        DrawCalculatedPath(Color.green);
-
         return true;
-    }
-
-    private void Update()
-    {
-        UpdateAnimation();
-
-        if (!activated || stopped)
-            return;
-
-        if (!agent.isOnNavMesh)
-            return;
-
-        if (agent.pathPending)
-            return;
-
-        if (agent.pathStatus != NavMeshPathStatus.PathComplete)
-        {
-            Debug.LogError(
-                "Officer lost the complete path. Current status: " +
-                agent.pathStatus,
-                gameObject
-            );
-
-            StopOfficer();
-            return;
-        }
-
-        if (float.IsInfinity(agent.remainingDistance))
-            return;
-
-        bool reachedDestination =
-            agent.remainingDistance <= agent.stoppingDistance &&
-            (!agent.hasPath || agent.velocity.sqrMagnitude <= 0.01f);
-
-        if (reachedDestination)
-            StopOfficer();
     }
 
     private void StopOfficer()
@@ -182,6 +173,7 @@ public class PoliceOfficer : MonoBehaviour
 
         stopped = true;
         activated = false;
+        canInteract = true;
 
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
@@ -201,8 +193,29 @@ public class PoliceOfficer : MonoBehaviour
         UpdateAnimation();
 
         Debug.Log(
-            "Officer stopped at: " +
-            transform.position
+            "Officer has arrived. Player can now interact.",
+            gameObject
+        );
+    }
+
+    private void FacePlayer()
+    {
+        if (!facePlayerAfterStopping || player == null)
+            return;
+
+        Vector3 direction = player.position - transform.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude <= 0.001f)
+            return;
+
+        Quaternion targetRotation =
+            Quaternion.LookRotation(direction.normalized);
+
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime
         );
     }
 
@@ -211,26 +224,16 @@ public class PoliceOfficer : MonoBehaviour
         if (officerAnimator == null)
             return;
 
-        float movementSpeed = agent.velocity.magnitude;
+        float movementSpeed = 0f;
+
+        if (agent != null && agent.isOnNavMesh)
+            movementSpeed = agent.velocity.magnitude;
 
         if (HasAnimatorParameter("Speed"))
-            officerAnimator.SetFloat("Speed", movementSpeed);
-    }
-
-    private void DrawCalculatedPath(Color colour)
-    {
-        if (!drawPath || calculatedPath == null)
-            return;
-
-        Vector3[] corners = calculatedPath.corners;
-
-        for (int i = 0; i < corners.Length - 1; i++)
         {
-            Debug.DrawLine(
-                corners[i],
-                corners[i + 1],
-                colour,
-                10f
+            officerAnimator.SetFloat(
+                "Speed",
+                movementSpeed
             );
         }
     }
