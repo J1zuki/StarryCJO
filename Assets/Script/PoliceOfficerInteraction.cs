@@ -2,6 +2,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Controls the player's interaction with the police officer,
+/// including the interaction prompt and warning dialogue UI.
+/// </summary>
 public class PoliceOfficerInteraction : MonoBehaviour
 {
     [Header("References")]
@@ -21,6 +25,10 @@ public class PoliceOfficerInteraction : MonoBehaviour
 
     private bool dialogueOpen;
 
+    /// <summary>
+    /// Hides the interaction prompt and dialogue panel when the
+    /// scene begins.
+    /// </summary>
     private void Start()
     {
         if (interactionPrompt != null)
@@ -30,6 +38,10 @@ public class PoliceOfficerInteraction : MonoBehaviour
             dialoguePanel.SetActive(false);
     }
 
+    /// <summary>
+    /// Checks whether the officer is ready for interaction, measures
+    /// the player's distance, and handles the E-key input.
+    /// </summary>
     private void Update()
     {
         if (policeOfficer == null)
@@ -70,6 +82,10 @@ public class PoliceOfficerInteraction : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Opens the dialogue panel, hides the interaction prompt,
+    /// and displays the police officer's warning message.
+    /// </summary>
     private void OpenDialogue()
     {
         dialogueOpen = true;
@@ -84,6 +100,10 @@ public class PoliceOfficerInteraction : MonoBehaviour
             dialogueText.text = officerDialogue;
     }
 
+    /// <summary>
+    /// Closes the dialogue panel and shows the interaction prompt
+    /// again while the player remains near the police officer.
+    /// </summary>
     private void CloseDialogue()
     {
         dialogueOpen = false;
@@ -95,6 +115,10 @@ public class PoliceOfficerInteraction : MonoBehaviour
             interactionPrompt.SetActive(true);
     }
 
+    /// <summary>
+    /// Hides both interaction UI elements and resets the dialogue
+    /// when the officer is unavailable or the player moves away.
+    /// </summary>
     private void HideInteraction()
     {
         dialogueOpen = false;

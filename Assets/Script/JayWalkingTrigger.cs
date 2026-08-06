@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Detects when the player enters the jaywalking area and commands
+/// the police officer to move towards the OfficerStopPoint.
+/// </summary>
 public class JaywalkingTrigger : MonoBehaviour
 {
     [Header("References")]
@@ -7,6 +11,13 @@ public class JaywalkingTrigger : MonoBehaviour
 
     private bool hasTriggered;
 
+    /// <summary>
+    /// Detects the player entering the trigger, starts the police
+    /// officer's interception, and disables the trigger after success.
+    /// </summary>
+    /// <param name="other">
+    /// The Collider that entered the jaywalking trigger.
+    /// </param>
     private void OnTriggerEnter(Collider other)
     {
         if (hasTriggered)

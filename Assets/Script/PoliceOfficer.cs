@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Controls the police officer's NavMesh movement, stopping behaviour,
+/// animation, player-facing rotation, and interaction availability.
+/// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class PoliceOfficer : MonoBehaviour
 {
@@ -26,9 +30,21 @@ public class PoliceOfficer : MonoBehaviour
 
     private Vector3 destination;
 
+    /// <summary>
+    /// Returns whether the player is currently allowed to interact
+    /// with the police officer.
+    /// </summary>
     public bool CanInteract => canInteract;
+
+    /// <summary>
+    /// Returns whether the police officer has reached the stop point.
+    /// </summary>
     public bool HasStopped => stopped;
 
+    /// <summary>
+    /// Gets the required components and prepares the police officer's
+    /// NavMeshAgent and Animator before the game begins.
+    /// </summary>
     private void Awake()
     {
         if (agent == null)
@@ -47,6 +63,10 @@ public class PoliceOfficer : MonoBehaviour
         agent.isStopped = true;
     }
 
+    /// <summary>
+    /// Updates the officer's movement, animation, stopping condition,
+    /// and rotation towards the player.
+    /// </summary>
     private void Update()
     {
         UpdateAnimation();
@@ -89,6 +109,14 @@ public class PoliceOfficer : MonoBehaviour
             StopOfficer();
     }
 
+    /// <summary>
+    /// Calculates a complete NavMesh path to the OfficerStopPoint
+    /// and begins moving the police officer towards it.
+    /// </summary>
+    /// <returns>
+    /// Returns true when a complete path is found and movement begins.
+    /// Returns false when the officer cannot move to the destination.
+    /// </returns>
     public bool InterceptPlayer()
     {
         if (activated || stopped)
@@ -166,6 +194,10 @@ public class PoliceOfficer : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Stops the police officer at the destination, clears the current
+    /// NavMesh path, and allows the player to interact with the officer.
+    /// </summary>
     private void StopOfficer()
     {
         if (stopped)
@@ -198,6 +230,10 @@ public class PoliceOfficer : MonoBehaviour
         );
     }
 
+    /// <summary>
+    /// Smoothly rotates the police officer towards the player after
+    /// the officer has reached the stop point.
+    /// </summary>
     private void FacePlayer()
     {
         if (!facePlayerAfterStopping || player == null)
@@ -219,6 +255,10 @@ public class PoliceOfficer : MonoBehaviour
         );
     }
 
+    /// <summary>
+    /// Updates the officer's Animator Speed parameter using the
+    /// current NavMeshAgent movement speed.
+    /// </summary>
     private void UpdateAnimation()
     {
         if (officerAnimator == null)
@@ -238,6 +278,16 @@ public class PoliceOfficer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks whether the officer's Animator contains a parameter
+    /// with the specified name.
+    /// </summary>
+    /// <param name="parameterName">
+    /// The name of the Animator parameter to search for.
+    /// </param>
+    /// <returns>
+    /// Returns true when the parameter exists; otherwise, false.
+    /// </returns>
     private bool HasAnimatorParameter(string parameterName)
     {
         if (officerAnimator == null)
@@ -253,6 +303,10 @@ public class PoliceOfficer : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Draws editor Gizmos showing the stop-point search radius
+    /// and a line between the officer and the OfficerStopPoint.
+    /// </summary>
     private void OnDrawGizmosSelected()
     {
         if (officerStopPoint == null)
