@@ -26,7 +26,7 @@ public class CharacterControls : MonoBehaviour
     public Transform sidewalkEdgePoint;
     public Transform pedestrianCrossingPoint;
     public Transform busStopPoint;
-    
+    public TrafficPole trafficLight;
 
     [Header("Player Settings")]
     public float interactionDistance = 2.5f;
@@ -48,14 +48,14 @@ public class CharacterControls : MonoBehaviour
         {
             case CrossingStep.NotStarted:
                 // Stop at the sidewalk edge
-                if (Vector3.Distance(transform.position, sidewalkEdgePoint.position) <= interactionDistance)
+                if (sidewalkEdgePoint != null && Vector3.Distance(transform.position, sidewalkEdgePoint.position) <= interactionDistance)
                 {
                     AdvanceStep(CrossingStep.StoppedAtSidewalk, "Stopped at the sidewalk edge.");
                 }
                 break;
 
             case CrossingStep.StoppedAtSidewalk:
-                //Put away the smartphone
+                // Put away the smartphone
                 if (Input.GetKeyDown(KeyCode.P) && isPhoneEquipped) // Press 'P' to stow phone
                 {
                     isPhoneEquipped = false;
@@ -66,7 +66,7 @@ public class CharacterControls : MonoBehaviour
 
             case CrossingStep.PhonePutAway:
                 // Wait at the pedestrian crossing
-                if (Vector3.Distance(transform.position, pedestrianCrossingPoint.position) <= interactionDistance)
+                if (pedestrianCrossingPoint != null && Vector3.Distance(transform.position, pedestrianCrossingPoint.position) <= interactionDistance)
                 {
                     AdvanceStep(CrossingStep.WaitingAtCrossing, "Reached pedestrian crossing point.");
                 }
@@ -77,7 +77,7 @@ public class CharacterControls : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E)) // Press 'E' to inspect light
                 {
                     RaycastHit hit;
-                    if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, interactionDistance))
+                    if (playerCamera != null && Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, interactionDistance))
                     {
                         if (hit.collider.CompareTag("TrafficLight"))
                         {
@@ -119,7 +119,7 @@ public class CharacterControls : MonoBehaviour
                 break;
 
             case CrossingStep.LookedRight2:
-                // Listen for approaching vehicles (Hold key or complete observation)
+                // Listen for approaching vehicles
                 if (Input.GetKeyDown(KeyCode.L)) // Press 'L' to listen
                 {
                     AdvanceStep(CrossingStep.ListenedForVehicles, "Listened for oncoming traffic/engine sounds.");
@@ -133,7 +133,7 @@ public class CharacterControls : MonoBehaviour
 
             case CrossingStep.CrossingSafe:
                 // Successfully reach destination (Bus Stop)
-                if (Vector3.Distance(transform.position, busStopPoint.position) <= interactionDistance)
+                if (busStopPoint != null && Vector3.Distance(transform.position, busStopPoint.position) <= interactionDistance)
                 {
                     AdvanceStep(CrossingStep.ReachedBusStop, "Successfully reached the bus stop! Sequence Complete.");
                 }
@@ -147,9 +147,10 @@ public class CharacterControls : MonoBehaviour
 
     private bool IsLookingInDirection(Vector3 targetDirection)
     {
+        if (playerCamera == null) return false;
         // Compares player camera forward direction against world direction vectors
         float dotProduct = Vector3.Dot(playerCamera.transform.forward, transform.TransformDirection(targetDirection));
-        return dotProduct > 0.75f; // Player is looking roughly toward that relative direction
+        return dotProduct > 0.75f;
     }
 
     private void AdvanceStep(CrossingStep nextStep, string message)
