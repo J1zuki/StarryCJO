@@ -1,9 +1,8 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
-/// Controls the traffic light cycle for pedestrian crossings.
-/// Synchronizes visual indicators for Red/Green states.
+/// Controls pedestrian light cycles, button interactions, and visual indicators.
 /// </summary>
 public class TrafficPole : MonoBehaviour
 {
@@ -20,13 +19,24 @@ public class TrafficPole : MonoBehaviour
     public float redLightDuration = 5.0f;
     public float greenLightDuration = 8.0f;
 
-    [Header("Visual Indicators (Optional)")]
+    [Header("Visual Indicators")]
     public GameObject redLightVisual;
     public GameObject greenLightVisual;
 
+    private Coroutine lightCycleCoroutine;
+
+    private void Awake()
+    {
+        // Ensures raycasts tag detection works seamlessly
+        if (!gameObject.CompareTag("TrafficLight"))
+        {
+            gameObject.tag = "TrafficLight";
+        }
+    }
+
     private void Start()
     {
-        StartCoroutine(TrafficLightCycle());
+        lightCycleCoroutine = StartCoroutine(TrafficLightCycle());
     }
 
     private IEnumerator TrafficLightCycle()
@@ -47,17 +57,34 @@ public class TrafficPole : MonoBehaviour
     {
         currentPedestrianState = newState;
 
-        // Toggle visual indicators if assigned
-        if (redLightVisual != null)
+        if (redLightVisual != null) 
             redLightVisual.SetActive(newState == PedestrianSignalState.DontWalk);
 
-        if (greenLightVisual != null)
+        if (greenLightVisual != null) 
             greenLightVisual.SetActive(newState == PedestrianSignalState.Walk);
     }
 
     /// <summary>
-    /// Returns true when it is safe for pedestrians to cross.
+    /// Forces the walk light immediately when interacting with the button pole.
     /// </summary>
+    public void RequestWalkSignal()
+    {
+        if (currentPedestrianState == PedestrianSignalState.DontWalk)
+        {
+            if (lightCycleCoroutine != null)
+                StopCoroutine(lightCycleCoroutine);
+
+            SetPedestrianState(PedestrianSignalState.Walk);
+            lightCycleCoroutine = StartCoroutine(ResetAfterWalk());
+        }
+    }
+
+    private IEnumerator ResetAfterWalk()
+    {
+        yield return new WaitForSeconds(greenLightDuration);
+        lightCycleCoroutine = StartCoroutine(TrafficLightCycle());
+    }
+
     public bool IsGreenForPedestrians()
     {
         return currentPedestrianState == PedestrianSignalState.Walk;

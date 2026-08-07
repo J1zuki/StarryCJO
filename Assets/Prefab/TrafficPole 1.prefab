@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7991260474814904628}
   - component: {fileID: 5260870969981324798}
   - component: {fileID: -2775073007275110089}
+  - component: {fileID: 4623685763884816526}
   m_Layer: 0
   m_Name: TrafficPole 1
   m_TagString: Untagged
@@ -108,3 +109,24 @@ MonoBehaviour:
   greenLightDuration: 8
   redLightVisual: {fileID: 0}
   greenLightVisual: {fileID: 0}
+--- !u!65 &4623685763884816526
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5909464014551346219}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.86968017, y: 3.288651, z: 0.4413733}
+  m_Center: {x: 0, y: 0, z: 0}
