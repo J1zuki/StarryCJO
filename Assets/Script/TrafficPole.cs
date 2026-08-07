@@ -1,6 +1,10 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
+/// <summary>
+/// Controls the traffic light cycle for pedestrian crossings.
+/// Synchronizes visual indicators for Red/Green states.
+/// </summary>
 public class TrafficPole : MonoBehaviour
 {
     public enum PedestrianSignalState
@@ -44,15 +48,15 @@ public class TrafficPole : MonoBehaviour
         currentPedestrianState = newState;
 
         // Toggle visual indicators if assigned
-        if (redLightVisual != null) 
+        if (redLightVisual != null)
             redLightVisual.SetActive(newState == PedestrianSignalState.DontWalk);
 
-        if (greenLightVisual != null) 
+        if (greenLightVisual != null)
             greenLightVisual.SetActive(newState == PedestrianSignalState.Walk);
     }
 
     /// <summary>
-    /// Called by RoadCrossingManager to check if it's safe to cross.
+    /// Returns true when it is safe for pedestrians to cross.
     /// </summary>
     public bool IsGreenForPedestrians()
     {
