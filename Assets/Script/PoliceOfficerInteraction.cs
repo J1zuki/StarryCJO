@@ -1,13 +1,12 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
 /// Controls the player's interaction and conversation with the police officer.
-/// It displays the interaction prompt, officer dialogue, player response choices,
-/// game-over panel, and loads the correct road-crossing scene.
+/// It displays dialogue choices, shows the Game Over panel,
+/// and moves the PlayerCapsule to the next mission spawn point.
 /// </summary>
 public class PoliceOfficerInteraction : MonoBehaviour
 {
@@ -30,10 +29,12 @@ public class PoliceOfficerInteraction : MonoBehaviour
 
     [Header("Game Over UI")]
     [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private Button nextSceneButton;
+    [SerializeField] private Button nextMissionButton;
+
+    [Header("Next Mission")]
+    [SerializeField] private Transform nextSpawnPoint;
 
     [Header("Player Control")]
-    [Tooltip("Assign scripts such as Third Person Controller and Starter Assets Inputs.")]
     [SerializeField] private Behaviour[] playerControlsToDisable;
 
     [Header("Interaction")]
@@ -54,14 +55,11 @@ public class PoliceOfficerInteraction : MonoBehaviour
         "drivers may be unable to brake their cars in time, or they may " +
         "not notice you crossing the road.";
 
-    [Header("Next Scene")]
-    [SerializeField] private string nextSceneName = "CorrectWayScene";
-
     private bool dialogueStarted;
     private bool conversationCompleted;
 
     /// <summary>
-    /// Sets up the button events and hides all interaction panels
+    /// Sets up all button events and hides the dialogue UI
     /// when the scene begins.
     /// </summary>
     private void Start()
@@ -77,13 +75,13 @@ public class PoliceOfficerInteraction : MonoBehaviour
         if (understandButton != null)
             understandButton.onClick.AddListener(ChooseUnderstand);
 
-        if (nextSceneButton != null)
-            nextSceneButton.onClick.AddListener(LoadNextScene);
+        if (nextMissionButton != null)
+            nextMissionButton.onClick.AddListener(GoToNextMission);
     }
 
     /// <summary>
     /// Checks whether the player is close enough to the police officer
-    /// and allows the player to begin the conversation by pressing E.
+    /// and allows the conversation to begin by pressing E.
     /// </summary>
     private void Update()
     {
@@ -127,7 +125,7 @@ public class PoliceOfficerInteraction : MonoBehaviour
     }
 
     /// <summary>
-    /// Opens the first officer dialogue, displays the first response choices,
+    /// Starts the conversation, shows the dialogue,
     /// unlocks the cursor, and disables player movement.
     /// </summary>
     private void StartConversation()
@@ -156,7 +154,7 @@ public class PoliceOfficerInteraction : MonoBehaviour
     }
 
     /// <summary>
-    /// Unlocks and shows the mouse cursor, then disables the assigned
+    /// Unlocks the cursor and disables the assigned
     /// player movement and camera-control scripts.
     /// </summary>
     private void EnterDialogueMode()
@@ -172,24 +170,24 @@ public class PoliceOfficerInteraction : MonoBehaviour
     }
 
     /// <summary>
-    /// Locks and hides the mouse cursor, then enables the assigned
-    /// player movement and camera-control scripts.
+    /// Restores the player movement scripts and locks
+    /// the mouse cursor for normal gameplay.
     /// </summary>
     private void ExitDialogueMode()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         foreach (Behaviour playerControl in playerControlsToDisable)
         {
             if (playerControl != null)
                 playerControl.enabled = true;
         }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     /// <summary>
-    /// Handles the player's "Okay..." response and immediately
-    /// displays the game-over panel.
+    /// Handles the player's "Okay..." response
+    /// and shows the Game Over panel.
     /// </summary>
     public void ChooseOkay()
     {
@@ -197,9 +195,8 @@ public class PoliceOfficerInteraction : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles the player's "But why? It's convenient." response.
-    /// It displays the officer's explanation and shows the
-    /// "Okay, I understand" button.
+    /// Handles the player's "But why?" response
+    /// and displays the police officer's explanation.
     /// </summary>
     public void ChooseWhy()
     {
@@ -215,7 +212,7 @@ public class PoliceOfficerInteraction : MonoBehaviour
 
     /// <summary>
     /// Handles the player's "Okay, I understand" response
-    /// and displays the game-over panel.
+    /// and shows the Game Over panel.
     /// </summary>
     public void ChooseUnderstand()
     {
@@ -223,8 +220,7 @@ public class PoliceOfficerInteraction : MonoBehaviour
     }
 
     /// <summary>
-    /// Hides the dialogue UI and displays the game-over panel.
-    /// The cursor remains visible so the player can click the next-scene button.
+    /// Hides the dialogue UI and shows the Game Over panel.
     /// </summary>
     private void ShowGameOverPanel()
     {
@@ -250,39 +246,69 @@ public class PoliceOfficerInteraction : MonoBehaviour
     }
 
     /// <summary>
-    /// Restores player control and loads the correct road-crossing scene.
+    /// Moves the PlayerCapsule to the next spawn point,
+    /// hides the Game Over panel, and restores player control.
     /// </summary>
-    public void LoadNextScene()
+    public void GoToNextMission()
     {
-        if (string.IsNullOrWhiteSpace(nextSceneName))
+        if (nextSpawnPoint == null)
         {
             Debug.LogError(
-                "The next scene name has not been entered.",
+                "NextSpawnPoint has not been assigned.",
                 gameObject
             );
 
             return;
         }
 
-        if (!Application.CanStreamedLevelBeLoaded(nextSceneName))
-        {
-            Debug.LogError(
-                "The scene '" + nextSceneName +
-                "' could not be loaded. Add it to the Build Profile " +
-                "and check that the scene name is correct.",
-                gameObject
-            );
+        CharacterController characterController =
+            GetComponent<CharacterController>();
 
-            return;
+        Rigidbody playerRigidbody =
+            GetComponent<Rigidbody>();
+
+        // Temporarily disable CharacterController so Unity
+        // does not fight against the teleport position.
+        if (characterController != null)
+            characterController.enabled = false;
+
+        // Clear Rigidbody movement before teleporting.
+        if (playerRigidbody != null)
+        {
+            playerRigidbody.linearVelocity = Vector3.zero;
+            playerRigidbody.angularVelocity = Vector3.zero;
         }
+
+        transform.SetPositionAndRotation(
+            nextSpawnPoint.position,
+            nextSpawnPoint.rotation
+        );
+
+        if (characterController != null)
+            characterController.enabled = true;
+
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
+        if (responseButtons != null)
+            responseButtons.SetActive(false);
+
+        if (understandButtonObject != null)
+            understandButtonObject.SetActive(false);
 
         ExitDialogueMode();
-        SceneManager.LoadScene(nextSceneName);
+
+        Debug.Log(
+            "Player moved to NextSpawnPoint.",
+            gameObject
+        );
     }
 
     /// <summary>
-    /// Hides the interaction prompt when the player cannot currently
-    /// interact with the police officer.
+    /// Hides the interaction prompt.
     /// </summary>
     private void HideInteractionPrompt()
     {
@@ -291,7 +317,7 @@ public class PoliceOfficerInteraction : MonoBehaviour
     }
 
     /// <summary>
-    /// Hides all dialogue, response, and game-over UI elements
+    /// Hides all dialogue and Game Over UI
     /// when the scene begins.
     /// </summary>
     private void HideAllUI()
@@ -313,19 +339,8 @@ public class PoliceOfficerInteraction : MonoBehaviour
     }
 
     /// <summary>
-    /// Restores the cursor and player control if the component becomes disabled.
-    /// </summary>
-    private void OnDisable()
-    {
-        if (!gameObject.scene.isLoaded)
-            return;
-
-        ExitDialogueMode();
-    }
-
-    /// <summary>
-    /// Removes the button listeners when this component is destroyed
-    /// to prevent duplicate or unwanted event calls.
+    /// Removes the button listeners when this component
+    /// is destroyed.
     /// </summary>
     private void OnDestroy()
     {
@@ -338,7 +353,7 @@ public class PoliceOfficerInteraction : MonoBehaviour
         if (understandButton != null)
             understandButton.onClick.RemoveListener(ChooseUnderstand);
 
-        if (nextSceneButton != null)
-            nextSceneButton.onClick.RemoveListener(LoadNextScene);
+        if (nextMissionButton != null)
+            nextMissionButton.onClick.RemoveListener(GoToNextMission);
     }
 }
