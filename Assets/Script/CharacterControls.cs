@@ -26,7 +26,7 @@ public class CharacterControls : MonoBehaviour
     public Transform sidewalkEdgePoint;
     public Transform pedestrianCrossingPoint;
     public Transform busStopPoint;
-    public TrafficLightController trafficLight; // Assign your traffic light script
+    
 
     [Header("Player Settings")]
     public float interactionDistance = 2.5f;
