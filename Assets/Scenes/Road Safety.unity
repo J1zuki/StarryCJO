@@ -224,6 +224,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1925873226565265906, guid: 2553cec8fdb3eb643bbe9f2ec880c472, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1463891810}
+    - targetCorrespondingSourceObject: {fileID: 1925873226565265906, guid: 2553cec8fdb3eb643bbe9f2ec880c472, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1463891811}
   m_SourcePrefab: {fileID: 100100000, guid: 2553cec8fdb3eb643bbe9f2ec880c472, type: 3}
 --- !u!4 &259466043 stripped
 Transform:
@@ -784,6 +787,18 @@ MonoBehaviour:
   explanationDialogue: 'Police Officer: Jaywalking can cause an accident because
     some drivers may be unable to brake their cars in time, or they may not notice
     you crossing the road.'
+--- !u!114 &1463891811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463891795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b329c1b4ca14a6946ad85d9f30e429c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!114 &1478431098 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 707071141261574843, guid: 7d65e324934ca794489aeec0ce555086, type: 3}
