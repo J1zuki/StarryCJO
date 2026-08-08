@@ -130,7 +130,7 @@ MonoBehaviour:
   yellowLightObject: {fileID: 0}
   greenLightObject: {fileID: 0}
   audioSource: {fileID: 0}
-  buttonClickSFX: {fileID: 0}
-  greenBeepSFX: {fileID: 0}
+  buttonClickSFX: {fileID: 8300000, guid: cf428c542ea9f7b4ab76b0c024423adb, type: 3}
+  greenBeepSFX: {fileID: 8300000, guid: 2e2bb0ae18de7944abc562da69dea63d, type: 3}
   delayBeforeGreen: 3
   greenDuration: 8

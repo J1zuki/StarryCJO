@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCAccidentSequence : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private TrafficLightController trafficLight;
+    [SerializeField] private TrafficLightControl trafficLight;
     [SerializeField] private GameObject jaywalkingNPC;
     [SerializeField] private Transform npcTargetPoint;
     [SerializeField] private GameObject speedingCar;
@@ -28,7 +28,7 @@ public class NPCAccidentSequence : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Only trigger if light is still RED
-            if (trafficLight != null && trafficLight.currentState == TrafficLightController.LightState.Red)
+            if (trafficLight != null && trafficLight.currentState == TrafficLightControl.LightState.Red)
             {
                 sequenceTriggered = true;
                 StartCoroutine(RunAccidentSequence());
