@@ -21,7 +21,7 @@ public class PlayerInteractionRaycast : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, rayDistance, interactableLayer))
         {
-            TrafficLightController trafficLight = hit.collider.GetComponentInParent<TrafficLightController>();
+            TrafficLightControl trafficLight = hit.collider.GetComponentInParent<TrafficLightControl>();
 
             if (trafficLight != null)
             {
