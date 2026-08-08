@@ -10,7 +10,6 @@ public class TrafficLightControl : MonoBehaviour
 
     [Header("Visual Light Objects / Materials")]
     [SerializeField] private GameObject redLightObject;
-    [SerializeField] private GameObject yellowLightObject;
     [SerializeField] private GameObject greenLightObject;
 
     [Header("Audio")]
