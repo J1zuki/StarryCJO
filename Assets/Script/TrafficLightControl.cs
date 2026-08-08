@@ -81,7 +81,6 @@ public class TrafficLightControl : MonoBehaviour
         currentState = state;
 
         if (redLightObject != null) redLightObject.SetActive(state == LightState.Red);
-        if (yellowLightObject != null) yellowLightObject.SetActive(state == LightState.Yellow);
         if (greenLightObject != null) greenLightObject.SetActive(state == LightState.Green);
     }
 }
