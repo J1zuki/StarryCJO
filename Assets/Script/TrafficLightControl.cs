@@ -12,8 +12,7 @@ public class TrafficLightControl : MonoBehaviour
     [SerializeField] private GameObject redLightObject;
     [SerializeField] private GameObject greenLightObject;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
+    [Header("Audio Clips")]
     [SerializeField] private AudioClip buttonClickSFX;
     [SerializeField] private AudioClip greenBeepSFX;
 
@@ -22,7 +21,7 @@ public class TrafficLightControl : MonoBehaviour
     [SerializeField] private float greenDuration = 8f;
 
     [Header("Safe Pedestrian Demo")]
-    [SerializeField] private SafeNPCController safeNPC; // Drag your Safe NPC here
+    [SerializeField] private SafeNPCController safeNPC; 
 
     private bool buttonPressed = false;
 
@@ -40,10 +39,10 @@ public class TrafficLightControl : MonoBehaviour
 
         buttonPressed = true;
 
-        // Play Button Click Sound
-        if (audioSource != null && buttonClickSFX != null)
+        // Play Button Click Sound at the traffic light's position
+        if (buttonClickSFX != null)
         {
-            audioSource.PlayOneShot(buttonClickSFX);
+            AudioSource.PlayClipAtPoint(buttonClickSFX, transform.position);
         }
 
         // Start cycle to change light
@@ -57,12 +56,10 @@ public class TrafficLightControl : MonoBehaviour
         // Turn Green
         SetLightState(LightState.Green);
 
-        // Loop green beep sound while green
-        if (audioSource != null && greenBeepSFX != null)
+        // Play green beep sound at the traffic light's position
+        if (greenBeepSFX != null)
         {
-            audioSource.clip = greenBeepSFX;
-            audioSource.loop = true;
-            audioSource.Play();
+            AudioSource.PlayClipAtPoint(greenBeepSFX, transform.position);
         }
 
         // Trigger safe NPC to walk across now that light is green
@@ -73,13 +70,7 @@ public class TrafficLightControl : MonoBehaviour
 
         yield return new WaitForSeconds(greenDuration);
 
-        // Stop Audio & Turn Red
-        if (audioSource != null)
-        {
-            audioSource.Stop();
-            audioSource.loop = false;
-        }
-
+        // Turn Red
         SetLightState(LightState.Red);
         buttonPressed = false;
     }
