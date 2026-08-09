@@ -4,24 +4,21 @@ using System.Collections;
 public class TrafficLightControl : MonoBehaviour
 {
     public enum LightState { Red, Yellow, Green }
-
-    [Header("Current State")]
     public LightState currentState = LightState.Red;
 
-    [Header("Visual Light Objects / Materials")]
+    [Header("Visual Light Objects")]
     [SerializeField] private GameObject redLightObject;
     [SerializeField] private GameObject greenLightObject;
 
-    [Header("Audio Clips")]
+    [Header("Paired Light Instance")]
+    [SerializeField] private TrafficLightControl oppositeTrafficLight;
+
+    [Header("Settings & Audio")]
     [SerializeField] private AudioClip buttonClickSFX;
     [SerializeField] private AudioClip greenBeepSFX;
-
-    [Header("Timing")]
     [SerializeField] private float delayBeforeGreen = 3f;
     [SerializeField] private float greenDuration = 8f;
-
-    [Header("Safe Pedestrian Demo")]
-    [SerializeField] private SafeNPCController safeNPC; 
+    [SerializeField] private SafeNPCController safeNPC;
 
     private bool buttonPressed = false;
 
@@ -30,22 +27,15 @@ public class TrafficLightControl : MonoBehaviour
         SetLightState(LightState.Red);
     }
 
-    /// <summary>
-    /// Called when the player interacts with the button via Raycast.
-    /// </summary>
     public void InteractWithButton()
     {
-        if (buttonPressed) return; // Prevent double pressing
-
+        if (buttonPressed) return;
         buttonPressed = true;
 
-        // Play Button Click Sound at the traffic light's position
-        if (buttonClickSFX != null)
-        {
-            AudioSource.PlayClipAtPoint(buttonClickSFX, transform.position);
-        }
+        if (oppositeTrafficLight != null) oppositeTrafficLight.buttonPressed = true;
 
-        // Start cycle to change light
+        if (buttonClickSFX != null) AudioSource.PlayClipAtPoint(buttonClickSFX, transform.position);
+
         StartCoroutine(TrafficLightSequence());
     }
 
@@ -53,29 +43,23 @@ public class TrafficLightControl : MonoBehaviour
     {
         yield return new WaitForSeconds(delayBeforeGreen);
 
-        // Turn Green
         SetLightState(LightState.Green);
+        if (oppositeTrafficLight != null) oppositeTrafficLight.SetLightState(LightState.Green);
 
-        // Play green beep sound at the traffic light's position
-        if (greenBeepSFX != null)
-        {
-            AudioSource.PlayClipAtPoint(greenBeepSFX, transform.position);
-        }
+        if (greenBeepSFX != null) AudioSource.PlayClipAtPoint(greenBeepSFX, transform.position);
 
-        // Trigger safe NPC to walk across now that light is green
-        if (safeNPC != null)
-        {
-            safeNPC.StartSafeCrossing();
-        }
+        if (safeNPC != null) safeNPC.StartSafeCrossing();
 
         yield return new WaitForSeconds(greenDuration);
 
-        // Turn Red
         SetLightState(LightState.Red);
+        if (oppositeTrafficLight != null) oppositeTrafficLight.SetLightState(LightState.Red);
+
         buttonPressed = false;
+        if (oppositeTrafficLight != null) oppositeTrafficLight.buttonPressed = false;
     }
 
-    private void SetLightState(LightState state)
+    public void SetLightState(LightState state)
     {
         currentState = state;
 
