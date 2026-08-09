@@ -22,7 +22,7 @@ public class TrafficLightControl : MonoBehaviour
     [SerializeField] private float greenDuration = 8f;
 
     [Header("Safe Pedestrian Demo")]
-    [SerializeField] private SafeNPCController safeNPC; // Drag your Safe NPC here
+    [SerializeField] private SafeNPCControl safeNPC; // Drag your Safe NPC here
 
     private bool buttonPressed = false;
 
