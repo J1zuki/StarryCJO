@@ -24,10 +24,17 @@ public class NPCAccidentSequence : MonoBehaviour
 
     private bool sequenceTriggered = false;
 
+    [Header("Car Spawning")]
+    [SerializeField] private Transform carStartPoint;
+
     private void Start()
     {
         if (fireAndSmokeFX != null) fireAndSmokeFX.SetActive(false);
-        if (speedingCar != null) speedingCar.SetActive(false);
+        if (speedingCar != null)
+        {
+            if (carStartPoint != null) speedingCar.transform.position = carStartPoint.position;
+            speedingCar.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
