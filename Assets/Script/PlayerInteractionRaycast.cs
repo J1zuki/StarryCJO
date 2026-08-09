@@ -26,12 +26,34 @@ public class PlayerInteractionRaycast : MonoBehaviour
 
     private void Update()
     {
-        if (panelActive) return; // Stop raycasting while UI is open
+        if (panelActive) return; // Pause raycast while panel is open
 
         Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, interactableLayer))
         {
-            // Traffic Light Interaction
+            // 1. Wrong NPC Interaction
+            WrongNPCInteraction wrongNPC = hit.collider.GetComponentInParent<WrongNPCInteraction>();
+            if (wrongNPC != null)
+            {
+                ShowPanel("Talk to Jaywalking Pedestrian?", () => {
+                    wrongNPC.OnPlayerTalk();
+                    HidePanel();
+                });
+                return;
+            }
+
+            // 2. Correct NPC Interaction
+            SafeNPCController safeNPC = hit.collider.GetComponentInParent<SafeNPCController>();
+            if (safeNPC != null)
+            {
+                ShowPanel("Talk to Pedestrian?", () => {
+                    safeNPC.OnPlayerTalk();
+                    HidePanel();
+                });
+                return;
+            }
+
+            // 3. Traffic Light Interaction
             TrafficLightControl trafficLight = hit.collider.GetComponentInParent<TrafficLightControl>();
             if (trafficLight != null)
             {
@@ -42,7 +64,7 @@ public class PlayerInteractionRaycast : MonoBehaviour
                 return;
             }
 
-            // Police Officer Interaction
+            // 4. Police Officer Interaction
             PoliceOfficerInteraction policeScript = hit.collider.GetComponentInParent<PoliceOfficerInteraction>();
             if (policeScript != null)
             {
@@ -67,7 +89,6 @@ public class PlayerInteractionRaycast : MonoBehaviour
             actionButton.onClick.AddListener(action);
         }
 
-        // Unlock cursor for UI clicking
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -77,7 +98,6 @@ public class PlayerInteractionRaycast : MonoBehaviour
         panelActive = false;
         if (interactionPanel != null) interactionPanel.SetActive(false);
 
-        // Lock cursor back for gameplay
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

@@ -7,14 +7,16 @@ using UnityEngine.AI;
 public class SafeNPCController : MonoBehaviour
 {
     [Header("Movement Points")]
-    [SerializeField] private Transform startPoint;
     [SerializeField] private Transform targetPoint;
+    [SerializeField] private Transform playerTransform;
 
-    [Header("Dialogue & Settings")]
+    [Header("Dialogue & UI")]
     [SerializeField] private TMP_Text miniDialogue;
     [SerializeField] private float walkSpeed = 2.5f;
+    [SerializeField] private float followDistance = 2f;
 
     private NavMeshAgent agent;
+    private bool isFollowingPlayer = false;
     private bool hasCrossed = false;
 
     private void Awake()
@@ -23,15 +25,46 @@ public class SafeNPCController : MonoBehaviour
         agent.speed = walkSpeed;
     }
 
-    private void Start()
+    private void Update()
     {
-        if (startPoint != null) agent.Warp(startPoint.position);
+        // Follow player continuously if dialogue action was accepted
+        if (isFollowingPlayer && !hasCrossed && playerTransform != null)
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+            if (distanceToPlayer > followDistance)
+            {
+                agent.SetDestination(playerTransform.position);
+            }
+            else
+            {
+                agent.ResetPath(); // Stop moving when close enough to player
+            }
+        }
+    }
+
+    public void OnPlayerTalk()
+    {
+        if (miniDialogue != null)
+        {
+            miniDialogue.gameObject.SetActive(true);
+            miniDialogue.text = "How to cross? Can you show me the way?";
+        }
+
+        // Start following the player
+        if (playerTransform == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null) playerTransform = playerObj.transform;
+        }
+
+        isFollowingPlayer = true;
     }
 
     public void StartSafeCrossing()
     {
         if (hasCrossed) return;
         hasCrossed = true;
+        isFollowingPlayer = false; // Stop following player, focus on target crosswalk point
         StartCoroutine(RunSafeCrossingSequence());
     }
 
@@ -43,7 +76,7 @@ public class SafeNPCController : MonoBehaviour
             miniDialogue.text = "Light is green! Looking left and right before crossing...";
         }
 
-        // Look Left & Right animation delays
+        // Look Left & Right check
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y - 45f, 0);
         yield return new WaitForSeconds(0.8f);
 
@@ -52,11 +85,10 @@ public class SafeNPCController : MonoBehaviour
 
         if (miniDialogue != null) miniDialogue.text = "Crossing safely!";
 
-        // Use NavMeshAgent to move to target point
         if (targetPoint != null)
         {
             agent.SetDestination(targetPoint.position);
-            
+
             while (agent.pathPending || agent.remainingDistance > 0.5f)
             {
                 yield return null;

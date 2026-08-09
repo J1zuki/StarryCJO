@@ -7447,7 +7447,6 @@ MonoBehaviour:
   policeDialogueScript: {fileID: 0}
   npcWalkSpeed: 2
   carSpeed: 25
-  carStartPoint: {fileID: 0}
 --- !u!1001 &2224169386312763778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7628,6 +7627,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1084573305991973284, guid: 4fc09cd68c6f0aa448edbe1c10763eba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6429628693838729078}
+    - targetCorrespondingSourceObject: {fileID: 1084573305991973284, guid: 4fc09cd68c6f0aa448edbe1c10763eba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6429628693838729079}
   m_SourcePrefab: {fileID: 100100000, guid: 4fc09cd68c6f0aa448edbe1c10763eba, type: 3}
 --- !u!1 &4585262582766042595 stripped
 GameObject:
@@ -8514,13 +8516,34 @@ MonoBehaviour:
   jaywalkingNPC: {fileID: 886645308}
   npcTargetPoint: {fileID: 514279732}
   speedingCar: {fileID: 0}
-  carCrashPoint: {fileID: 0}
+  carCrashPoint: {fileID: 31284699}
   fireAndSmokeFX: {fileID: 0}
   floatingMiniDialogue: {fileID: 0}
   policeDialogueScript: {fileID: 0}
   npcWalkSpeed: 2
   carSpeed: 25
-  carStartPoint: {fileID: 0}
+--- !u!195 &6429628693838729079
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4585262582766042595}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &6474873303233549598
 PrefabInstance:
   m_ObjectHideFlags: 0

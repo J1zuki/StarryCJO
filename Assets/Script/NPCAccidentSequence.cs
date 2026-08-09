@@ -46,10 +46,16 @@ public class NPCAccidentSequence : MonoBehaviour
         {
             if (trafficLight != null && trafficLight.currentState == TrafficLightControl.LightState.Red)
             {
-                sequenceTriggered = true;
-                StartCoroutine(RunAccidentSequence());
+                StartJaywalkingSequence();
             }
         }
+    }
+
+    public void StartJaywalkingSequence()
+    {
+        if (sequenceTriggered) return;
+        sequenceTriggered = true;
+        StartCoroutine(RunAccidentSequence());
     }
 
     private IEnumerator RunAccidentSequence()
@@ -57,10 +63,10 @@ public class NPCAccidentSequence : MonoBehaviour
         if (floatingMiniDialogue != null)
         {
             floatingMiniDialogue.gameObject.SetActive(true);
-            floatingMiniDialogue.text = "This is the wrong way of crossing... Now, let me show you the right way.";
+            floatingMiniDialogue.text = "Nothing wrong, I'm going to cross the road!";
         }
 
-        // Command NavMeshAgent to move across
+        // Command NPC to walk across using NavMeshAgent
         if (npcAgent != null && npcTargetPoint != null)
         {
             npcAgent.SetDestination(npcTargetPoint.position);
@@ -71,8 +77,8 @@ public class NPCAccidentSequence : MonoBehaviour
 
         while (!impactOccurred)
         {
-            // Spawn car when NPC reaches midway on the street
-            if (!carSpawned && npcAgent != null && npcAgent.remainingDistance < 3f)
+            // Spawn speeding car midway
+            if (!carSpawned && npcAgent != null && npcAgent.remainingDistance < 3.5f)
             {
                 if (speedingCar != null)
                 {
@@ -81,7 +87,7 @@ public class NPCAccidentSequence : MonoBehaviour
                 }
             }
 
-            // Move car toward crash point
+            // Move speeding car toward impact point
             if (carSpawned && speedingCar != null && carCrashPoint != null)
             {
                 speedingCar.transform.position = Vector3.MoveTowards(
@@ -90,7 +96,6 @@ public class NPCAccidentSequence : MonoBehaviour
                     carSpeed * Time.deltaTime
                 );
 
-                // Detect crash distance
                 if (Vector3.Distance(speedingCar.transform.position, carCrashPoint.position) < 0.8f)
                 {
                     impactOccurred = true;
@@ -100,7 +105,7 @@ public class NPCAccidentSequence : MonoBehaviour
             yield return null;
         }
 
-        // Trigger Impact Effects
+        // FX & NPC Disable on collision
         if (fireAndSmokeFX != null && carCrashPoint != null)
         {
             fireAndSmokeFX.transform.position = carCrashPoint.position;
