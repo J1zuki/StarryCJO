@@ -1,87 +1,84 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using TMPro;
 
 public class PlayerInteractionRaycast : MonoBehaviour
 {
-    [SerializeField] private float rayDistance = 3f;
+    [Header("Raycast Setup")]
+    [SerializeField] private float rayDistance = 4f;
     [SerializeField] private LayerMask interactableLayer;
 
-    [Header("UI Reference")]
-    [SerializeField] private GameObject interactionUI; // The black banner panel at the top
-    [SerializeField] private TMP_Text interactionText;  // TextMeshPro component inside the panel
-
-    [Header("Input Setup")]
-    [SerializeField] private InputAction interactAction;
+    [Header("UI Panel Setup")]
+    [SerializeField] private GameObject interactionPanel;
+    [SerializeField] private TMP_Text promptText;
+    [SerializeField] private Button actionButton;
+    [SerializeField] private Button closeButton;
 
     private Camera mainCamera;
+    private bool panelActive = false;
 
     private void Awake()
     {
         mainCamera = Camera.main;
-        // Optional fallback if interactAction isn't set via Inspector:
-        if (interactAction == null || interactAction.bindings.Count == 0)
-        {
-            interactAction = new UnityEngine.InputSystem.InputAction("Interact", binding: "<Keyboard>/b");
-        }
-    }
-
-    private void OnEnable()
-    {
-        interactAction.Enable();
-    }
-
-    private void OnDisable()
-    {
-        interactAction.Disable();
+        if (closeButton != null) closeButton.onClick.AddListener(HidePanel);
+        HidePanel();
     }
 
     private void Update()
     {
-        Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
-        RaycastHit hit;
+        if (panelActive) return; // Stop raycasting while UI is open
 
-        if (Physics.Raycast(ray, out hit, rayDistance, interactableLayer))
+        Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, interactableLayer))
         {
-            // 1. Check for Traffic Light Button
+            // Traffic Light Interaction
             TrafficLightControl trafficLight = hit.collider.GetComponentInParent<TrafficLightControl>();
             if (trafficLight != null)
             {
-                ShowPrompt("Press 'B' to press traffic button");
-
-                if (interactAction.WasPressedThisFrame())
-                {
+                ShowPanel("Interact with Traffic Light?", () => {
                     trafficLight.InteractWithButton();
-                }
+                    HidePanel();
+                });
                 return;
             }
 
-            // 2. Check for Police Officer / Dialogue NPC
+            // Police Officer Interaction
             PoliceOfficerInteraction policeScript = hit.collider.GetComponentInParent<PoliceOfficerInteraction>();
             if (policeScript != null)
             {
-                ShowPrompt("Press 'B' to talk to police officer");
-
-                if (interactAction.WasPressedThisFrame())
-                {
+                ShowPanel("Talk to Police Officer?", () => {
                     policeScript.ChooseWhy();
-                }
+                    HidePanel();
+                });
                 return;
             }
         }
-
-        // Hide prompt if looking away from interactables
-        HidePrompt();
     }
 
-    private void ShowPrompt(string message)
+    private void ShowPanel(string message, UnityEngine.Events.UnityAction action)
     {
-        if (interactionUI != null) interactionUI.SetActive(true);
-        if (interactionText != null) interactionText.text = message;
+        panelActive = true;
+        if (interactionPanel != null) interactionPanel.SetActive(true);
+        if (promptText != null) promptText.text = message;
+
+        if (actionButton != null)
+        {
+            actionButton.onClick.RemoveAllListeners();
+            actionButton.onClick.AddListener(action);
+        }
+
+        // Unlock cursor for UI clicking
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
-    private void HidePrompt()
+    public void HidePanel()
     {
-        if (interactionUI != null) interactionUI.SetActive(false);
+        panelActive = false;
+        if (interactionPanel != null) interactionPanel.SetActive(false);
+
+        // Lock cursor back for gameplay
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }
