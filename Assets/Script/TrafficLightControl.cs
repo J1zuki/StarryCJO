@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class TrafficLightControl : MonoBehaviour
 {
@@ -13,12 +13,14 @@ public class TrafficLightControl : MonoBehaviour
     [Header("Paired Light Instance")]
     [SerializeField] private TrafficLightControl oppositeTrafficLight;
 
-    [Header("Settings & Audio")]
+    [Header("Timing & Audio")]
+    [SerializeField] private float delayBeforeGreen = 2f;
+    [SerializeField] private float greenDuration = 6f;
     [SerializeField] private AudioClip buttonClickSFX;
     [SerializeField] private AudioClip greenBeepSFX;
-    [SerializeField] private float delayBeforeGreen = 3f;
-    [SerializeField] private float greenDuration = 8f;
-    [SerializeField] private SafeNPCController safeNPC;
+
+    [Header("Safe Pedestrian Demo")]
+    [SerializeField] private SafeNPCController safeNPC; 
 
     private bool buttonPressed = false;
 
@@ -30,8 +32,8 @@ public class TrafficLightControl : MonoBehaviour
     public void InteractWithButton()
     {
         if (buttonPressed) return;
+        
         buttonPressed = true;
-
         if (oppositeTrafficLight != null) oppositeTrafficLight.buttonPressed = true;
 
         if (buttonClickSFX != null) AudioSource.PlayClipAtPoint(buttonClickSFX, transform.position);
@@ -43,15 +45,18 @@ public class TrafficLightControl : MonoBehaviour
     {
         yield return new WaitForSeconds(delayBeforeGreen);
 
+        // Set Green on both lights
         SetLightState(LightState.Green);
         if (oppositeTrafficLight != null) oppositeTrafficLight.SetLightState(LightState.Green);
 
         if (greenBeepSFX != null) AudioSource.PlayClipAtPoint(greenBeepSFX, transform.position);
 
+        // Start Safe NPC NavMesh movement
         if (safeNPC != null) safeNPC.StartSafeCrossing();
 
         yield return new WaitForSeconds(greenDuration);
 
+        // Reset to Red on both lights
         SetLightState(LightState.Red);
         if (oppositeTrafficLight != null) oppositeTrafficLight.SetLightState(LightState.Red);
 
@@ -62,7 +67,6 @@ public class TrafficLightControl : MonoBehaviour
     public void SetLightState(LightState state)
     {
         currentState = state;
-
         if (redLightObject != null) redLightObject.SetActive(state == LightState.Red);
         if (greenLightObject != null) greenLightObject.SetActive(state == LightState.Green);
     }
