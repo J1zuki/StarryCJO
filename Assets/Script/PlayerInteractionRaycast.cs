@@ -1,13 +1,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerInteractionRaycast : MonoBehaviour
 {
     [SerializeField] private float rayDistance = 3f;
     [SerializeField] private LayerMask interactableLayer;
-    [SerializeField] private GameObject interactionUI;
+    
+    [Header("UI Reference")]
+    [SerializeField] private GameObject interactionUI; // The black banner panel at the top
+    [SerializeField] private TMP_Text interactionText;  // TextMeshPro component inside the panel
 
-    // Assign this via the Inspector or set up in Input System
+    [Header("Input Setup")]
     [SerializeField] private InputAction interactAction; 
 
     private Camera mainCamera;
@@ -34,21 +38,45 @@ public class PlayerInteractionRaycast : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, rayDistance, interactableLayer))
         {
+            // 1. Check for Traffic Light Button
             TrafficLightControl trafficLight = hit.collider.GetComponentInParent<TrafficLightControl>();
-
             if (trafficLight != null)
             {
-                if (interactionUI != null) interactionUI.SetActive(true);
+                ShowPrompt("Press 'B' to press traffic button");
 
-                // Triggers whenever your configured "Interact" action is pressed
                 if (interactAction.WasPressedThisFrame())
                 {
                     trafficLight.InteractWithButton();
                 }
                 return;
             }
+
+            // 2. Check for Police Officer / Dialogue NPC
+            PoliceOfficerInteraction policeScript = hit.collider.GetComponentInParent<PoliceOfficerInteraction>();
+            if (policeScript != null)
+            {
+                ShowPrompt("Press 'B' to talk to police officer");
+
+                if (interactAction.WasPressedThisFrame())
+                {
+                    policeScript.ChooseWhy(); 
+                }
+                return;
+            }
         }
 
+        // Hide prompt if looking away from interactables
+        HidePrompt();
+    }
+
+    private void ShowPrompt(string message)
+    {
+        if (interactionUI != null) interactionUI.SetActive(true);
+        if (interactionText != null) interactionText.text = message;
+    }
+
+    private void HidePrompt()
+    {
         if (interactionUI != null) interactionUI.SetActive(false);
     }
 }
