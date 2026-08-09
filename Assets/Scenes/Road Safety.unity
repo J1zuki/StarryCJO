@@ -1774,10 +1774,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ecf36c75fa36045b8caa825cda6b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SafeNPCController
-  startPoint: {fileID: 0}
-  targetPoint: {fileID: 0}
-  miniDialogue: {fileID: 0}
+  targetPoint: {fileID: 76381153}
+  playerTransform: {fileID: 1463891809}
+  miniDialogue: {fileID: 277476950}
   walkSpeed: 2
+  followDistance: 2
 --- !u!195 &886645310
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7630,6 +7631,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1084573305991973284, guid: 4fc09cd68c6f0aa448edbe1c10763eba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6429628693838729079}
+    - targetCorrespondingSourceObject: {fileID: 1084573305991973284, guid: 4fc09cd68c6f0aa448edbe1c10763eba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6429628693838729080}
   m_SourcePrefab: {fileID: 100100000, guid: 4fc09cd68c6f0aa448edbe1c10763eba, type: 3}
 --- !u!1 &4585262582766042595 stripped
 GameObject:
@@ -8507,7 +8511,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4585262582766042595}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de2aca46fad11514ba8d6ee580a0117d, type: 3}
   m_Name: 
@@ -8544,6 +8548,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6429628693838729080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4585262582766042595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcf8ec6de135fb47ba11b33b63550e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WrongNPCInteraction
+  accidentSequenceScript: {fileID: 0}
 --- !u!1001 &6474873303233549598
 PrefabInstance:
   m_ObjectHideFlags: 0
