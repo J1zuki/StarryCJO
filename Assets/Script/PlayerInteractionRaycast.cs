@@ -5,13 +5,26 @@ public class PlayerInteractionRaycast : MonoBehaviour
 {
     [SerializeField] private float rayDistance = 3f;
     [SerializeField] private LayerMask interactableLayer;
-    [SerializeField] private GameObject interactionUI; // "Press E to Push Button" UI
+    [SerializeField] private GameObject interactionUI;
+
+    // Assign this via the Inspector or set up in Input System
+    [SerializeField] private InputAction interactAction; 
 
     private Camera mainCamera;
 
     private void Awake()
     {
         mainCamera = Camera.main;
+    }
+
+    private void OnEnable()
+    {
+        interactAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        interactAction.Disable();
     }
 
     private void Update()
@@ -27,7 +40,8 @@ public class PlayerInteractionRaycast : MonoBehaviour
             {
                 if (interactionUI != null) interactionUI.SetActive(true);
 
-                if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
+                // Triggers whenever your configured "Interact" action is pressed
+                if (interactAction.WasPressedThisFrame())
                 {
                     trafficLight.InteractWithButton();
                 }
