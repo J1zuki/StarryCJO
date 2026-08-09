@@ -11,8 +11,11 @@ public class NPCAccidentSequence : MonoBehaviour
     [SerializeField] private GameObject speedingCar;
     [SerializeField] private Transform carCrashPoint;
 
+    [Header("Fire & Smoke FX")]
+    [SerializeField] private GameObject fireAndSmokeFX; // Drag your Particle System prefab/object here
+
     [Header("Dialogue & UI")]
-    [SerializeField] private TMP_Text floatingMiniDialogue; // Shows "This is wrong" above NPC
+    [SerializeField] private TMP_Text floatingMiniDialogue; 
     [SerializeField] private PoliceOfficerInteraction policeDialogueScript;
 
     [Header("Settings")]
@@ -20,6 +23,12 @@ public class NPCAccidentSequence : MonoBehaviour
     [SerializeField] private float carSpeed = 25f;
 
     private bool sequenceTriggered = false;
+
+    private void Start()
+    {
+        if (fireAndSmokeFX != null) fireAndSmokeFX.SetActive(false);
+        if (speedingCar != null) speedingCar.SetActive(false);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -38,28 +47,34 @@ public class NPCAccidentSequence : MonoBehaviour
 
     private IEnumerator RunAccidentSequence()
     {
-        // 1. NPC begins jaywalking across the road
+        // 1. NPC begins walking across on RED light without looking
         if (floatingMiniDialogue != null)
         {
             floatingMiniDialogue.gameObject.SetActive(true);
-            floatingMiniDialogue.text = "This is wrong...";
+            floatingMiniDialogue.text = "This is the wrong way of crossing a pedestrian, especially during red light. Now, let me show you the right way.";
         }
 
-        float walkProgress = 0f;
         Vector3 npcStartPos = jaywalkingNPC.transform.position;
+        float walkProgress = 0f;
+        float totalDistance = Vector3.Distance(npcStartPos, npcTargetPoint.position);
 
-        while (walkProgress < 1f)
+        // Make NPC look straight ahead towards target (never left or right)
+        jaywalkingNPC.transform.LookAt(npcTargetPoint);
+
+        bool impactOccurred = false;
+
+        while (walkProgress < 1f && !impactOccurred)
         {
-            walkProgress += Time.deltaTime * (npcWalkSpeed / Vector3.Distance(npcStartPos, npcTargetPoint.position));
+            walkProgress += Time.deltaTime * (npcWalkSpeed / totalDistance);
             jaywalkingNPC.transform.position = Vector3.Lerp(npcStartPos, npcTargetPoint.position, walkProgress);
 
-            // Halfway across, spawn/drive the car
-            if (walkProgress >= 0.4f && speedingCar != null && !speedingCar.activeSelf)
+            // Spawn car when NPC reaches ~30% of the crosswalk
+            if (walkProgress >= 0.3f && speedingCar != null && !speedingCar.activeSelf)
             {
                 speedingCar.SetActive(true);
             }
 
-            // Move car toward crash point
+            // Move speeding car toward impact point
             if (speedingCar != null && speedingCar.activeSelf)
             {
                 speedingCar.transform.position = Vector3.MoveTowards(
@@ -67,22 +82,41 @@ public class NPCAccidentSequence : MonoBehaviour
                     carCrashPoint.position,
                     carSpeed * Time.deltaTime
                 );
+
+                // Check distance for impact
+                if (Vector3.Distance(speedingCar.transform.position, carCrashPoint.position) < 0.5f)
+                {
+                    impactOccurred = true;
+                }
             }
 
             yield return null;
         }
 
-        // 2. Hide Mini Dialogue
+        // 2. CRASH / IMPACT OCCURS
+        if (fireAndSmokeFX != null)
+        {
+            fireAndSmokeFX.transform.position = carCrashPoint.position;
+            fireAndSmokeFX.SetActive(true); // Fire and smoke turn on
+        }
+
+        // Hide or ragdoll the NPC on impact
+        if (jaywalkingNPC != null)
+        {
+            jaywalkingNPC.SetActive(false);
+        }
+
+        yield return new WaitForSeconds(2.5f);
+
+        // 3. Clear floating text & trigger main dialogue script
         if (floatingMiniDialogue != null)
         {
             floatingMiniDialogue.gameObject.SetActive(false);
         }
 
-        // 3. Trigger your Police Officer interaction script dialogue automatically
         if (policeDialogueScript != null)
         {
-            // Police officer intervenes with dialogue: "This is why we must stay alert!"
-            policeDialogueScript.ChooseWhy(); // Displays explanation dialogue
+            policeDialogueScript.ChooseWhy(); 
         }
     }
 }
