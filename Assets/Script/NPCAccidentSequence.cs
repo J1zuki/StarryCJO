@@ -15,7 +15,7 @@ public class NPCAccidentSequence : MonoBehaviour
     [SerializeField] private GameObject fireAndSmokeFX; // Drag your Particle System prefab/object here
 
     [Header("Dialogue & UI")]
-    [SerializeField] private TMP_Text floatingMiniDialogue; 
+    [SerializeField] private TMP_Text floatingMiniDialogue;
     [SerializeField] private PoliceOfficerInteraction policeDialogueScript;
 
     [Header("Settings")]
@@ -47,20 +47,20 @@ public class NPCAccidentSequence : MonoBehaviour
 
     private IEnumerator RunAccidentSequence()
     {
-        // 1. NPC begins walking across on RED light without looking
+        if (jaywalkingNPC == null || npcTargetPoint == null) yield break;
+
         if (floatingMiniDialogue != null)
         {
             floatingMiniDialogue.gameObject.SetActive(true);
-            floatingMiniDialogue.text = "This is the wrong way of crossing a pedestrian, especially during red light. Now, let me show you the right way.";
+            floatingMiniDialogue.text = "This is the wrong way of crossing...";
         }
 
         Vector3 npcStartPos = jaywalkingNPC.transform.position;
-        float walkProgress = 0f;
         float totalDistance = Vector3.Distance(npcStartPos, npcTargetPoint.position);
+        if (totalDistance <= 0.01f) totalDistance = 1f; // Prevent divide by zero
 
-        // Make NPC look straight ahead towards target (never left or right)
+        float walkProgress = 0f;
         jaywalkingNPC.transform.LookAt(npcTargetPoint);
-
         bool impactOccurred = false;
 
         while (walkProgress < 1f && !impactOccurred)
@@ -68,14 +68,13 @@ public class NPCAccidentSequence : MonoBehaviour
             walkProgress += Time.deltaTime * (npcWalkSpeed / totalDistance);
             jaywalkingNPC.transform.position = Vector3.Lerp(npcStartPos, npcTargetPoint.position, walkProgress);
 
-            // Spawn car when NPC reaches ~30% of the crosswalk
+            // Spawn car around 30% progress
             if (walkProgress >= 0.3f && speedingCar != null && !speedingCar.activeSelf)
             {
                 speedingCar.SetActive(true);
             }
 
-            // Move speeding car toward impact point
-            if (speedingCar != null && speedingCar.activeSelf)
+            if (speedingCar != null && speedingCar.activeSelf && carCrashPoint != null)
             {
                 speedingCar.transform.position = Vector3.MoveTowards(
                     speedingCar.transform.position,
@@ -83,8 +82,7 @@ public class NPCAccidentSequence : MonoBehaviour
                     carSpeed * Time.deltaTime
                 );
 
-                // Check distance for impact
-                if (Vector3.Distance(speedingCar.transform.position, carCrashPoint.position) < 0.5f)
+                if (Vector3.Distance(speedingCar.transform.position, carCrashPoint.position) < 0.8f)
                 {
                     impactOccurred = true;
                 }
@@ -93,30 +91,18 @@ public class NPCAccidentSequence : MonoBehaviour
             yield return null;
         }
 
-        // 2. CRASH / IMPACT OCCURS
-        if (fireAndSmokeFX != null)
+        // Trigger Crash FX & hide NPC
+        if (fireAndSmokeFX != null && carCrashPoint != null)
         {
             fireAndSmokeFX.transform.position = carCrashPoint.position;
-            fireAndSmokeFX.SetActive(true); // Fire and smoke turn on
+            fireAndSmokeFX.SetActive(true);
         }
 
-        // Hide or ragdoll the NPC on impact
-        if (jaywalkingNPC != null)
-        {
-            jaywalkingNPC.SetActive(false);
-        }
+        if (jaywalkingNPC != null) jaywalkingNPC.SetActive(false);
 
         yield return new WaitForSeconds(2.5f);
 
-        // 3. Clear floating text & trigger main dialogue script
-        if (floatingMiniDialogue != null)
-        {
-            floatingMiniDialogue.gameObject.SetActive(false);
-        }
-
-        if (policeDialogueScript != null)
-        {
-            policeDialogueScript.ChooseWhy(); 
-        }
+        if (floatingMiniDialogue != null) floatingMiniDialogue.gameObject.SetActive(false);
+        if (policeDialogueScript != null) policeDialogueScript.ChooseWhy();
     }
 }
