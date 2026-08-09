@@ -8512,7 +8512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   trafficLight: {fileID: 4107829977123193663, guid: d63cb5c2be697ab44b33d13cb34bf4a7, type: 3}
   jaywalkingNPC: {fileID: 886645308}
-  npcTargetPoint: {fileID: 0}
+  npcTargetPoint: {fileID: 514279732}
   speedingCar: {fileID: 0}
   carCrashPoint: {fileID: 0}
   fireAndSmokeFX: {fileID: 0}

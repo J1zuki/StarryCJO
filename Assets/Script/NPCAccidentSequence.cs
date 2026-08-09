@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NPCAccidentSequence : MonoBehaviour
 {
@@ -12,28 +13,28 @@ public class NPCAccidentSequence : MonoBehaviour
     [SerializeField] private Transform carCrashPoint;
 
     [Header("Fire & Smoke FX")]
-    [SerializeField] private GameObject fireAndSmokeFX; // Drag your Particle System prefab/object here
+    [SerializeField] private GameObject fireAndSmokeFX;
 
     [Header("Dialogue & UI")]
-    [SerializeField] private TMP_Text floatingMiniDialogue;
+    [SerializeField] private TMP_Text floatingMiniDialogue; 
     [SerializeField] private PoliceOfficerInteraction policeDialogueScript;
 
     [Header("Settings")]
     [SerializeField] private float npcWalkSpeed = 2f;
     [SerializeField] private float carSpeed = 25f;
 
+    private NavMeshAgent npcAgent;
     private bool sequenceTriggered = false;
-
-    [Header("Car Spawning")]
-    [SerializeField] private Transform carStartPoint;
 
     private void Start()
     {
         if (fireAndSmokeFX != null) fireAndSmokeFX.SetActive(false);
-        if (speedingCar != null)
+        if (speedingCar != null) speedingCar.SetActive(false);
+
+        if (jaywalkingNPC != null)
         {
-            if (carStartPoint != null) speedingCar.transform.position = carStartPoint.position;
-            speedingCar.SetActive(false);
+            npcAgent = jaywalkingNPC.GetComponent<NavMeshAgent>();
+            if (npcAgent != null) npcAgent.speed = npcWalkSpeed;
         }
     }
 
@@ -43,7 +44,6 @@ public class NPCAccidentSequence : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            // Only trigger if light is still RED
             if (trafficLight != null && trafficLight.currentState == TrafficLightControl.LightState.Red)
             {
                 sequenceTriggered = true;
@@ -54,34 +54,35 @@ public class NPCAccidentSequence : MonoBehaviour
 
     private IEnumerator RunAccidentSequence()
     {
-        if (jaywalkingNPC == null || npcTargetPoint == null) yield break;
-
         if (floatingMiniDialogue != null)
         {
             floatingMiniDialogue.gameObject.SetActive(true);
-            floatingMiniDialogue.text = "This is the wrong way of crossing...";
+            floatingMiniDialogue.text = "This is the wrong way of crossing... Now, let me show you the right way.";
         }
 
-        Vector3 npcStartPos = jaywalkingNPC.transform.position;
-        float totalDistance = Vector3.Distance(npcStartPos, npcTargetPoint.position);
-        if (totalDistance <= 0.01f) totalDistance = 1f; // Prevent divide by zero
+        // Command NavMeshAgent to move across
+        if (npcAgent != null && npcTargetPoint != null)
+        {
+            npcAgent.SetDestination(npcTargetPoint.position);
+        }
 
-        float walkProgress = 0f;
-        jaywalkingNPC.transform.LookAt(npcTargetPoint);
+        bool carSpawned = false;
         bool impactOccurred = false;
 
-        while (walkProgress < 1f && !impactOccurred)
+        while (!impactOccurred)
         {
-            walkProgress += Time.deltaTime * (npcWalkSpeed / totalDistance);
-            jaywalkingNPC.transform.position = Vector3.Lerp(npcStartPos, npcTargetPoint.position, walkProgress);
-
-            // Spawn car around 30% progress
-            if (walkProgress >= 0.3f && speedingCar != null && !speedingCar.activeSelf)
+            // Spawn car when NPC reaches midway on the street
+            if (!carSpawned && npcAgent != null && npcAgent.remainingDistance < 3f)
             {
-                speedingCar.SetActive(true);
+                if (speedingCar != null)
+                {
+                    speedingCar.SetActive(true);
+                    carSpawned = true;
+                }
             }
 
-            if (speedingCar != null && speedingCar.activeSelf && carCrashPoint != null)
+            // Move car toward crash point
+            if (carSpawned && speedingCar != null && carCrashPoint != null)
             {
                 speedingCar.transform.position = Vector3.MoveTowards(
                     speedingCar.transform.position,
@@ -89,6 +90,7 @@ public class NPCAccidentSequence : MonoBehaviour
                     carSpeed * Time.deltaTime
                 );
 
+                // Detect crash distance
                 if (Vector3.Distance(speedingCar.transform.position, carCrashPoint.position) < 0.8f)
                 {
                     impactOccurred = true;
@@ -98,13 +100,14 @@ public class NPCAccidentSequence : MonoBehaviour
             yield return null;
         }
 
-        // Trigger Crash FX & hide NPC
+        // Trigger Impact Effects
         if (fireAndSmokeFX != null && carCrashPoint != null)
         {
             fireAndSmokeFX.transform.position = carCrashPoint.position;
             fireAndSmokeFX.SetActive(true);
         }
 
+        if (npcAgent != null) npcAgent.isStopped = true;
         if (jaywalkingNPC != null) jaywalkingNPC.SetActive(false);
 
         yield return new WaitForSeconds(2.5f);
