@@ -6917,6 +6917,10 @@ PrefabInstance:
       propertyPath: safeNPC
       value: 
       objectReference: {fileID: 886645309}
+    - target: {fileID: 1517595835344684130, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: oppositeTrafficLight
+      value: 
+      objectReference: {fileID: 5983421569601303889}
     - target: {fileID: 1626613176831926165, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
       propertyPath: m_LocalPosition.x
       value: 25.2
@@ -6992,6 +6996,10 @@ PrefabInstance:
     - target: {fileID: 5515593578220637352, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5777111113370211258, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Name
+      value: TrafficPoleoop
       objectReference: {fileID: 0}
     - target: {fileID: 5777111113370211258, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
       propertyPath: m_Layer
@@ -7094,6 +7102,10 @@ PrefabInstance:
       value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 7566535845676055352, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Name
+      value: TrafficPoleoop
+      objectReference: {fileID: 0}
+    - target: {fileID: 7566535845676055352, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
@@ -7108,6 +7120,10 @@ PrefabInstance:
     - target: {fileID: 8785183775838671720, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
       propertyPath: m_LocalPosition.z
       value: 208.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8838868807029596185, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Name
+      value: TrafficPoleoop
       objectReference: {fileID: 0}
     - target: {fileID: 8838868807029596185, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
       propertyPath: m_Layer
@@ -7132,6 +7148,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1698372525}
   m_SourcePrefab: {fileID: 100100000, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+--- !u!114 &5983421569601303889 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 144941937566127148, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+  m_PrefabInstance: {fileID: 5983421569601303888}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c337cc14c9d10b4289799700a7d465d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &6313400364429420332
 PrefabInstance:
   m_ObjectHideFlags: 0
