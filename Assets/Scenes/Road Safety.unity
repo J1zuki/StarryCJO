@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 31284698}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.7, y: 0, z: -51.8}
+  m_LocalPosition: {x: 21.13, y: 0, z: -50.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 277476949}
   - component: {fileID: 277476951}
   - component: {fileID: 277476950}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PromptText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,7 +670,7 @@ GameObject:
   - component: {fileID: 513602957}
   - component: {fileID: 513602959}
   - component: {fileID: 513602958}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: InteractionPromptPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -760,7 +760,7 @@ Transform:
   m_GameObject: {fileID: 514279731}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.075251, y: -0.0512553, z: -0.09026865}
+  m_LocalPosition: {x: 2.08, y: -0.0512553, z: 6.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1126,7 +1126,7 @@ GameObject:
   - component: {fileID: 1003458460}
   - component: {fileID: 1003458459}
   - component: {fileID: 1003458458}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DialogueCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
