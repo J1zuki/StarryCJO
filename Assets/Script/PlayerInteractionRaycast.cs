@@ -6,19 +6,24 @@ public class PlayerInteractionRaycast : MonoBehaviour
 {
     [SerializeField] private float rayDistance = 3f;
     [SerializeField] private LayerMask interactableLayer;
-    
+
     [Header("UI Reference")]
     [SerializeField] private GameObject interactionUI; // The black banner panel at the top
     [SerializeField] private TMP_Text interactionText;  // TextMeshPro component inside the panel
 
     [Header("Input Setup")]
-    [SerializeField] private InputAction interactAction; 
+    [SerializeField] private InputAction interactAction;
 
     private Camera mainCamera;
 
     private void Awake()
     {
         mainCamera = Camera.main;
+        // Optional fallback if interactAction isn't set via Inspector:
+        if (interactAction == null || interactAction.bindings.Count == 0)
+        {
+            interactAction = new UnityEngine.InputSystem.InputAction("Interact", binding: "<Keyboard>/b");
+        }
     }
 
     private void OnEnable()
@@ -59,7 +64,7 @@ public class PlayerInteractionRaycast : MonoBehaviour
 
                 if (interactAction.WasPressedThisFrame())
                 {
-                    policeScript.ChooseWhy(); 
+                    policeScript.ChooseWhy();
                 }
                 return;
             }
