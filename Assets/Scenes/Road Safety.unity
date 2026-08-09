@@ -124,6 +124,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4267560172334046627, guid: 5171e09aa2464744ea9817441ad06701, type: 3}
   m_PrefabInstance: {fileID: 8611079686784524792}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &31284698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 31284699}
+  m_Layer: 0
+  m_Name: CrashPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &31284699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31284698}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.7, y: 0, z: -51.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1301915619}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &56964939 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 246674887408467062, guid: 7d65e324934ca794489aeec0ce555086, type: 3}
@@ -672,6 +703,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &514279731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 514279732}
+  m_Layer: 0
+  m_Name: NPC_Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &514279732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514279731}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 886645307}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &551313370
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,7 +899,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.27
+      value: 23.72
       objectReference: {fileID: 0}
     - target: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       propertyPath: m_LocalPosition.y
@@ -845,23 +907,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -46.55
+      value: -50.93
       objectReference: {fileID: 0}
     - target: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -869,7 +931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -881,7 +943,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 512444055734054304, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 514279732}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7026759022980865846, guid: af6f9335513c9854bbe988b8bea58c40, type: 3}
       insertIndex: -1
@@ -5980,6 +6045,7 @@ Transform:
   - {fileID: 969464748}
   - {fileID: 886645307}
   - {fileID: 2130641615}
+  - {fileID: 31284699}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1342949945 stripped
@@ -6501,6 +6567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2130641615}
   - component: {fileID: 2130641616}
+  - component: {fileID: 2130641617}
   m_Layer: 0
   m_Name: AccidentTrigger
   m_TagString: Untagged
@@ -6544,6 +6611,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.3148499, y: 1, z: 3.307953}
   m_Center: {x: -1.1574249, y: 0, z: 1.1539764}
+--- !u!114 &2130641617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130641614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de2aca46fad11514ba8d6ee580a0117d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  trafficLight: {fileID: 4107829977123193663, guid: d63cb5c2be697ab44b33d13cb34bf4a7, type: 3}
+  jaywalkingNPC: {fileID: 886645308}
+  npcTargetPoint: {fileID: 0}
+  speedingCar: {fileID: 0}
+  carCrashPoint: {fileID: 0}
+  fireAndSmokeFX: {fileID: 0}
+  floatingMiniDialogue: {fileID: 0}
+  policeDialogueScript: {fileID: 0}
+  npcWalkSpeed: 2
+  carSpeed: 25
 --- !u!1001 &2224169386312763778
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -21,6 +21,9 @@ public class TrafficLightControl : MonoBehaviour
     [SerializeField] private float delayBeforeGreen = 3f;
     [SerializeField] private float greenDuration = 8f;
 
+    [Header("Safe Pedestrian Demo")]
+    [SerializeField] private SafeNPCController safeNPC; // Drag your Safe NPC here
+
     private bool buttonPressed = false;
 
     private void Start()
@@ -29,7 +32,7 @@ public class TrafficLightControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Called when the player looks at the button and presses 'E' via Raycast.
+    /// Called when the player interacts with the button via Raycast.
     /// </summary>
     public void InteractWithButton()
     {
@@ -60,6 +63,12 @@ public class TrafficLightControl : MonoBehaviour
             audioSource.clip = greenBeepSFX;
             audioSource.loop = true;
             audioSource.Play();
+        }
+
+        // Trigger safe NPC to walk across now that light is green
+        if (safeNPC != null)
+        {
+            safeNPC.StartSafeCrossing();
         }
 
         yield return new WaitForSeconds(greenDuration);
