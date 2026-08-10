@@ -19,7 +19,7 @@ public class StoreOwnerNPC : MonoBehaviour
 
     private void Awake()
     {
-        agent = GetComponent();
+        agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = stoppingDistance;
     }
 
