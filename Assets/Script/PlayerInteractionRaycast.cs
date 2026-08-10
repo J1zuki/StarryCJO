@@ -1,7 +1,22 @@
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+/*
+ * Author: Joyce Kwek
+ * Date: 10th August 2026
+ * File: PlayerInteractionRaycast.cs
+ * Description:
+ * Uses a raycast from the player's camera to detect interactable
+ * objects such as NPCGirl, traffic lights, and the police officer.
+ */
 
+using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
+/// <summary>
+/// Detects interactable objects using a camera raycast
+/// and allows the player to interact with them.
+/// </summary>
 public class PlayerInteractionRaycast : MonoBehaviour
 {
     [Header("Raycast Setup")]
@@ -14,91 +29,211 @@ public class PlayerInteractionRaycast : MonoBehaviour
     [SerializeField] private Button actionButton;
     [SerializeField] private Button closeButton;
 
-    private Camera mainCamera;
-    private bool panelActive = false;
+    [Header("Player Control")]
+    [SerializeField] private Behaviour[] playerControlsToDisable;
 
+    private Camera mainCamera;
+
+    private bool panelActive;
+    private UnityAction currentAction;
+
+    /// <summary>
+    /// Gets the main camera, prepares the close button,
+    /// and hides the interaction panel when the game begins.
+    /// </summary>
     private void Awake()
     {
         mainCamera = Camera.main;
-        if (closeButton != null) closeButton.onClick.AddListener(HidePanel);
+
+        if (closeButton != null)
+            closeButton.onClick.AddListener(HidePanel);
+
         HidePanel();
     }
 
+    /// <summary>
+    /// Casts a ray from the player's camera and checks
+    /// whether the player is looking at an interactable object.
+    /// </summary>
     private void Update()
     {
-        if (panelActive) return; // Pause raycast while panel is open
+        if (panelActive)
+            return;
 
-        Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, interactableLayer))
+        if (mainCamera == null)
+            return;
+
+        Ray ray = new Ray(
+            mainCamera.transform.position,
+            mainCamera.transform.forward
+        );
+
+        RaycastHit hit;
+
+        if (!Physics.Raycast(
+            ray,
+            out hit,
+            rayDistance,
+            interactableLayer))
         {
-            // 1. Wrong NPC Interaction
-            WrongNPCInteraction wrongNPC = hit.collider.GetComponentInParent<WrongNPCInteraction>();
-            if (wrongNPC != null)
+            return;
+        }
+
+        // NPC Girl interaction
+        NPCGirl npcGirl =
+            hit.collider.GetComponentInParent<NPCGirl>();
+
+        if (npcGirl != null)
+        {
+            if (Keyboard.current != null &&
+                Keyboard.current.eKey.wasPressedThisFrame)
             {
-                ShowPanel("Talk to Jaywalking Pedestrian?", () => {
-                    wrongNPC.OnPlayerTalk();
-                    HidePanel();
-                });
-                return;
+                ShowPanel(
+                    "Observe the pedestrian crossing on red?",
+                    npcGirl.StartWrongCrossing
+                );
             }
 
-            // 2. Correct NPC Interaction
-            SafeNPCController safeNPC = hit.collider.GetComponentInParent<SafeNPCController>();
-            if (safeNPC != null)
+            return;
+        }
+
+        // Traffic light interaction
+        TrafficLightControl trafficLight =
+            hit.collider.GetComponentInParent<TrafficLightControl>();
+
+        if (trafficLight != null)
+        {
+            if (Keyboard.current != null &&
+                Keyboard.current.eKey.wasPressedThisFrame)
             {
-                ShowPanel("Talk to Pedestrian?", () => {
-                    safeNPC.OnPlayerTalk();
-                    HidePanel();
-                });
-                return;
+                ShowPanel(
+                    "Request pedestrian crossing?",
+                    trafficLight.InteractWithButton
+                );
             }
 
-            // 3. Traffic Light Interaction
-            TrafficLightControl trafficLight = hit.collider.GetComponentInParent<TrafficLightControl>();
-            if (trafficLight != null)
-            {
-                ShowPanel("Interact with Traffic Light?", () => {
-                    trafficLight.InteractWithButton();
-                    HidePanel();
-                });
-                return;
-            }
+            return;
+        }
 
-            // 4. Police Officer Interaction
-            PoliceOfficerInteraction policeScript = hit.collider.GetComponentInParent<PoliceOfficerInteraction>();
-            if (policeScript != null)
+        // Police officer interaction
+        PoliceOfficerInteraction policeOfficer =
+            hit.collider.GetComponentInParent<PoliceOfficerInteraction>();
+
+        if (policeOfficer != null)
+        {
+            if (Keyboard.current != null &&
+                Keyboard.current.eKey.wasPressedThisFrame)
             {
-                ShowPanel("Talk to Police Officer?", () => {
-                    policeScript.ChooseWhy();
-                    HidePanel();
-                });
-                return;
+                ShowPanel(
+                    "Talk to the police officer?",
+                    policeOfficer.ChooseWhy
+                );
             }
         }
     }
 
-    private void ShowPanel(string message, UnityEngine.Events.UnityAction action)
+    /// <summary>
+    /// Opens the interaction panel and stores the action
+    /// that should run when the player clicks the action button.
+    /// </summary>
+    /// <param name="message">
+    /// Message displayed in the interaction panel.
+    /// </param>
+    /// <param name="action">
+    /// Action performed when the player confirms the interaction.
+    /// </param>
+    private void ShowPanel(
+        string message,
+        UnityAction action)
     {
         panelActive = true;
-        if (interactionPanel != null) interactionPanel.SetActive(true);
-        if (promptText != null) promptText.text = message;
+        currentAction = action;
+
+        if (interactionPanel != null)
+            interactionPanel.SetActive(true);
+
+        if (promptText != null)
+            promptText.text = message;
 
         if (actionButton != null)
         {
             actionButton.onClick.RemoveAllListeners();
-            actionButton.onClick.AddListener(action);
+            actionButton.onClick.AddListener(PerformCurrentAction);
         }
+
+        DisablePlayerControls();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
+    /// <summary>
+    /// Performs the stored interaction action
+    /// and closes the interaction panel.
+    /// </summary>
+    private void PerformCurrentAction()
+    {
+        if (currentAction != null)
+            currentAction.Invoke();
+
+        HidePanel();
+    }
+
+    /// <summary>
+    /// Hides the interaction panel and restores
+    /// normal player controls.
+    /// </summary>
     public void HidePanel()
     {
         panelActive = false;
-        if (interactionPanel != null) interactionPanel.SetActive(false);
+        currentAction = null;
+
+        if (interactionPanel != null)
+            interactionPanel.SetActive(false);
+
+        EnablePlayerControls();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    /// <summary>
+    /// Temporarily disables the assigned player movement
+    /// and camera-control scripts.
+    /// </summary>
+    private void DisablePlayerControls()
+    {
+        foreach (
+            Behaviour playerControl
+            in playerControlsToDisable)
+        {
+            if (playerControl != null)
+                playerControl.enabled = false;
+        }
+    }
+
+    /// <summary>
+    /// Restores the assigned player movement
+    /// and camera-control scripts.
+    /// </summary>
+    private void EnablePlayerControls()
+    {
+        foreach (
+            Behaviour playerControl
+            in playerControlsToDisable)
+        {
+            if (playerControl != null)
+                playerControl.enabled = true;
+        }
+    }
+
+    /// <summary>
+    /// Removes the close-button listener when
+    /// this component is destroyed.
+    /// </summary>
+    private void OnDestroy()
+    {
+        if (closeButton != null)
+            closeButton.onClick.RemoveListener(HidePanel);
     }
 }

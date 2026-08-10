@@ -3,22 +3,25 @@
  * Date: 10th August 2026
  * File: TrafficLightControl.cs
  * Description:
- * Controls the pedestrian traffic light system.
- * It synchronises two opposite traffic lights, plays sound effects,
- * changes between red and green states, and can start the safe NPC crossing.
+ * Controls the pedestrian traffic signal.
+ * Two traffic-light poles can be paired so that both signals
+ * always display the same red or green state.
+ * Pressing B requests the pedestrian crossing sequence.
  */
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
-/// Controls a pedestrian traffic light and keeps it synchronised
-/// with the traffic light on the opposite side of the road.
+/// Controls a pedestrian traffic light and synchronises its
+/// signal state with a paired traffic light on the opposite
+/// side of the road.
 /// </summary>
 public class TrafficLightControl : MonoBehaviour
 {
     /// <summary>
-    /// Possible states for the pedestrian traffic light.
+    /// Available pedestrian traffic-light states.
     /// </summary>
     public enum LightState
     {
@@ -28,15 +31,17 @@ public class TrafficLightControl : MonoBehaviour
     }
 
     [Header("Current State")]
-    [SerializeField]
-    private LightState currentState = LightState.Red;
+    [SerializeField] private LightState currentState = LightState.Red;
 
     [Header("Visual Light Objects")]
     [SerializeField] private GameObject redLightObject;
     [SerializeField] private GameObject greenLightObject;
 
-    [Header("Paired Light Instance")]
+    [Header("Paired Traffic Light")]
     [SerializeField] private TrafficLightControl oppositeTrafficLight;
+
+    [Header("Button Interaction")]
+    [SerializeField] private bool allowBKeyInteraction = true;
 
     [Header("Timing")]
     [SerializeField] private float delayBeforeGreen = 2f;
@@ -47,25 +52,24 @@ public class TrafficLightControl : MonoBehaviour
     [SerializeField] private AudioClip buttonClickSFX;
     [SerializeField] private AudioClip greenBeepSFX;
 
-    [Header("Safe Pedestrian Demo")]
-    [SerializeField] private SafeNPCController safeNPC;
-
     private bool buttonPressed;
+    private Coroutine trafficLightCoroutine;
 
     /// <summary>
-    /// Returns the current traffic-light state.
-    /// This is used by other scripts such as WrongNPCController.
+    /// Returns the current pedestrian traffic-light state.
+    /// NPCGirl can use this to check whether the signal is red.
     /// </summary>
     public LightState CurrentState => currentState;
 
     /// <summary>
-    /// Returns whether the pedestrian crossing button
-    /// has already been pressed.
+    /// Returns whether the crossing button has already
+    /// been pressed.
     /// </summary>
     public bool ButtonPressed => buttonPressed;
 
     /// <summary>
-    /// Sets the pedestrian light to red when the scene begins.
+    /// Sets the pedestrian traffic light to red
+    /// when the scene begins.
     /// </summary>
     private void Start()
     {
@@ -73,8 +77,27 @@ public class TrafficLightControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts the pedestrian crossing sequence when
-    /// the crossing button is activated.
+    /// Detects the B key and starts the pedestrian
+    /// crossing sequence when B interaction is enabled.
+    /// </summary>
+    private void Update()
+    {
+        if (!allowBKeyInteraction)
+            return;
+
+        if (Keyboard.current == null)
+            return;
+
+        if (Keyboard.current.bKey.wasPressedThisFrame)
+        {
+            InteractWithButton();
+        }
+    }
+
+    /// <summary>
+    /// Handles the pedestrian crossing request.
+    /// It synchronises both traffic lights, plays the
+    /// button sound, and begins the light sequence.
     /// </summary>
     public void InteractWithButton()
     {
@@ -84,16 +107,25 @@ public class TrafficLightControl : MonoBehaviour
         buttonPressed = true;
 
         if (oppositeTrafficLight != null)
+        {
             oppositeTrafficLight.SetButtonPressed(true);
+        }
 
         PlaySound(buttonClickSFX);
 
-        StartCoroutine(TrafficLightSequence());
+        if (trafficLightCoroutine != null)
+        {
+            StopCoroutine(trafficLightCoroutine);
+        }
+
+        trafficLightCoroutine =
+            StartCoroutine(TrafficLightSequence());
     }
 
     /// <summary>
-    /// Waits before changing both pedestrian signals to green,
-    /// starts the safe NPC crossing, and resets both lights to red.
+    /// Keeps both pedestrian signals red for a short delay,
+    /// changes both lights to green, waits for the green duration,
+    /// and then changes both lights back to red.
     /// </summary>
     private IEnumerator TrafficLightSequence()
     {
@@ -105,9 +137,6 @@ public class TrafficLightControl : MonoBehaviour
 
         PlaySound(greenBeepSFX);
 
-        if (safeNPC != null)
-            safeNPC.StartSafeCrossing();
-
         yield return new WaitForSeconds(greenDuration);
 
         SetBothLights(LightState.Red);
@@ -115,11 +144,15 @@ public class TrafficLightControl : MonoBehaviour
         buttonPressed = false;
 
         if (oppositeTrafficLight != null)
+        {
             oppositeTrafficLight.SetButtonPressed(false);
+        }
+
+        trafficLightCoroutine = null;
     }
 
     /// <summary>
-    /// Changes both this traffic light and the opposite
+    /// Changes this traffic light and the paired
     /// traffic light to the same state.
     /// </summary>
     /// <param name="state">
@@ -130,14 +163,17 @@ public class TrafficLightControl : MonoBehaviour
         SetLightState(state);
 
         if (oppositeTrafficLight != null)
+        {
             oppositeTrafficLight.SetLightState(state);
+        }
     }
 
     /// <summary>
-    /// Changes this traffic light's visual state.
+    /// Changes this individual traffic light's
+    /// red and green visual objects.
     /// </summary>
     /// <param name="state">
-    /// The new pedestrian traffic-light state.
+    /// The new traffic-light state.
     /// </param>
     public void SetLightState(LightState state)
     {
@@ -159,8 +195,9 @@ public class TrafficLightControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates the crossing-button state for this traffic light.
-    /// Used to keep both paired traffic lights synchronised.
+    /// Updates the internal crossing-button state.
+    /// This is used to keep the paired traffic light
+    /// synchronised with the main traffic light.
     /// </summary>
     /// <param name="pressed">
     /// Whether the crossing button is currently active.
@@ -171,16 +208,17 @@ public class TrafficLightControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Plays the specified sound through the assigned AudioSource.
+    /// Plays the specified traffic-light sound
+    /// through the assigned AudioSource.
     /// </summary>
-    /// <param name="clip">
-    /// The AudioClip that should be played.
+    /// <param name="audioClip">
+    /// Audio clip that should be played.
     /// </param>
-    private void PlaySound(AudioClip clip)
+    private void PlaySound(AudioClip audioClip)
     {
-        if (audioSource == null || clip == null)
+        if (audioSource == null || audioClip == null)
             return;
 
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(audioClip);
     }
 }

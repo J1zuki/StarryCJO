@@ -1,22 +1,22 @@
 /*
  * Author: Joyce Kwek
  * Date: 10th August 2026
- * File: WrongNPCController.cs
+ * File: NPCGirl.cs
  * Description:
- * Controls the unsafe pedestrian NPC demonstration.
- * The NPC waits at the traffic light and runs across the road
- * when instructed by the WrongWayDialogue trigger.
+ * Controls NPCGirl during the unsafe road-crossing demonstration.
+ * NPCGirl waits beside the pedestrian crossing and crosses the road
+ * once the player reaches the WrongWayDialogue trigger.
  */
 
 using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Controls the NPC that demonstrates unsafe behaviour
-/// by crossing the road while the pedestrian traffic light is red.
+/// Controls NPCGirl and demonstrates unsafe pedestrian behaviour
+/// by crossing the road while the pedestrian signal is red.
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
-public class WrongNPCController : MonoBehaviour
+public class NPCGirl : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private NavMeshAgent agent;
@@ -24,7 +24,7 @@ public class WrongNPCController : MonoBehaviour
     [SerializeField] private TrafficLightControl trafficLight;
 
     [Header("Movement")]
-    [SerializeField] private float runningSpeed = 5f;
+    [SerializeField] private float runningSpeed = 4.5f;
     [SerializeField] private float stoppingDistance = 0.2f;
 
     [Header("Animation")]
@@ -32,11 +32,16 @@ public class WrongNPCController : MonoBehaviour
     [SerializeField] private string speedParameter = "Speed";
 
     private bool isCrossing;
-    private bool hasFinished;
+    private bool hasCrossed;
 
     /// <summary>
-    /// Gets the required components and prepares the NPC
-    /// to wait at the pedestrian crossing.
+    /// Returns whether NPCGirl has completed the unsafe crossing.
+    /// </summary>
+    public bool HasCrossed => hasCrossed;
+
+    /// <summary>
+    /// Gets the required components and prepares NPCGirl
+    /// to wait beside the pedestrian crossing.
     /// </summary>
     private void Awake()
     {
@@ -50,19 +55,22 @@ public class WrongNPCController : MonoBehaviour
         agent.stoppingDistance = stoppingDistance;
         agent.autoBraking = true;
 
+        if (animator != null)
+            animator.applyRootMotion = false;
+
         if (agent.isOnNavMesh)
             agent.isStopped = true;
     }
 
     /// <summary>
-    /// Checks the NPC movement and stops the NPC
-    /// after reaching the crossing destination.
+    /// Updates NPCGirl's movement and detects when
+    /// she reaches the opposite side of the road.
     /// </summary>
     private void Update()
     {
         UpdateAnimation();
 
-        if (!isCrossing || hasFinished)
+        if (!isCrossing)
             return;
 
         if (!agent.isOnNavMesh)
@@ -71,14 +79,23 @@ public class WrongNPCController : MonoBehaviour
         if (agent.pathPending)
             return;
 
-        if (agent.pathStatus != NavMeshPathStatus.PathComplete)
+        if (agent.pathStatus == NavMeshPathStatus.PathPartial)
         {
             Debug.LogError(
-                "Wrong NPC does not have a complete NavMesh path.",
+                "NPCGirl has a partial path. Check the NavMesh across the road.",
                 gameObject
             );
 
-            StopNPC();
+            return;
+        }
+
+        if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
+        {
+            Debug.LogError(
+                "NPCGirl has an invalid NavMesh path.",
+                gameObject
+            );
+
             return;
         }
 
@@ -95,18 +112,23 @@ public class WrongNPCController : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts the unsafe crossing demonstration only if
-    /// the pedestrian traffic light is currently red.
+    /// Starts NPCGirl crossing the road while the
+    /// pedestrian traffic light is red.
     /// </summary>
     public void StartWrongCrossing()
     {
-        if (isCrossing || hasFinished)
+        if (isCrossing || hasCrossed)
             return;
+
+        Debug.Log(
+            "NPCGirl StartWrongCrossing triggered.",
+            gameObject
+        );
 
         if (crossingDestination == null)
         {
             Debug.LogError(
-                "Wrong NPC Crossing Destination has not been assigned.",
+                "WrongWayCrossPoint has not been assigned.",
                 gameObject
             );
 
@@ -116,7 +138,7 @@ public class WrongNPCController : MonoBehaviour
         if (trafficLight == null)
         {
             Debug.LogError(
-                "Traffic Light has not been assigned to WrongNPCController.",
+                "TrafficPole has not been assigned to NPCGirl.",
                 gameObject
             );
 
@@ -126,7 +148,7 @@ public class WrongNPCController : MonoBehaviour
         if (!agent.isOnNavMesh)
         {
             Debug.LogError(
-                "Wrong NPC is not standing on the NavMesh.",
+                "NPCGirl is not standing on the NavMesh.",
                 gameObject
             );
 
@@ -137,7 +159,7 @@ public class WrongNPCController : MonoBehaviour
             TrafficLightControl.LightState.Red)
         {
             Debug.LogWarning(
-                "Wrong NPC can only start crossing while the pedestrian light is red.",
+                "NPCGirl demonstration requires the light to be RED.",
                 gameObject
             );
 
@@ -146,17 +168,17 @@ public class WrongNPCController : MonoBehaviour
 
         NavMeshPath path = new NavMeshPath();
 
-        bool pathFound =
-            agent.CalculatePath(
-                crossingDestination.position,
-                path
-            );
+        bool pathFound = agent.CalculatePath(
+            crossingDestination.position,
+            path
+        );
 
         if (!pathFound ||
             path.status != NavMeshPathStatus.PathComplete)
         {
             Debug.LogError(
-                "Wrong NPC cannot find a complete path to the crossing destination.",
+                "NPCGirl cannot find a complete path to WrongWayCrossPoint. " +
+                "Path status: " + path.status,
                 gameObject
             );
 
@@ -164,54 +186,39 @@ public class WrongNPCController : MonoBehaviour
         }
 
         agent.speed = runningSpeed;
-        agent.stoppingDistance = stoppingDistance;
         agent.isStopped = false;
-
         agent.SetPath(path);
 
         isCrossing = true;
 
         Debug.Log(
-            "Wrong NPC started crossing while the pedestrian light is RED.",
+            "NPCGirl is crossing while the light is RED.",
             gameObject
         );
     }
 
     /// <summary>
-    /// Stops the NPC after it reaches the other side
-    /// of the road.
+    /// Stops NPCGirl after she reaches the opposite pavement.
     /// </summary>
     private void FinishCrossing()
     {
-        hasFinished = true;
         isCrossing = false;
-
-        StopNPC();
-
-        Debug.Log(
-            "Wrong NPC finished the unsafe crossing.",
-            gameObject
-        );
-    }
-
-    /// <summary>
-    /// Stops the NavMeshAgent and clears its current path.
-    /// </summary>
-    private void StopNPC()
-    {
-        if (!agent.isOnNavMesh)
-            return;
+        hasCrossed = true;
 
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
         agent.ResetPath();
 
         UpdateAnimation();
+
+        Debug.Log(
+            "NPCGirl completed the unsafe crossing.",
+            gameObject
+        );
     }
 
     /// <summary>
-    /// Updates the NPC Animator Speed parameter
-    /// using the NavMeshAgent movement speed.
+    /// Updates NPCGirl's movement animation.
     /// </summary>
     private void UpdateAnimation()
     {
@@ -229,23 +236,15 @@ public class WrongNPCController : MonoBehaviour
 
     /// <summary>
     /// Checks whether the NPC Animator contains
-    /// a parameter with the specified name.
+    /// the requested parameter.
     /// </summary>
-    /// <param name="parameterName">
-    /// The name of the Animator parameter.
-    /// </param>
-    /// <returns>
-    /// Returns true when the parameter exists.
-    /// </returns>
-    private bool HasAnimatorParameter(
-        string parameterName)
+    private bool HasAnimatorParameter(string parameterName)
     {
         if (animator == null)
             return false;
 
-        foreach (
-            AnimatorControllerParameter parameter
-            in animator.parameters)
+        foreach (AnimatorControllerParameter parameter
+                 in animator.parameters)
         {
             if (parameter.name == parameterName)
                 return true;
