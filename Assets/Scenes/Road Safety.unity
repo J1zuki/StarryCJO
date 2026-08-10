@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -250,14 +250,14 @@ RectTransform:
   m_GameObject: {fileID: 22857403}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.7715411, y: 1.7715411, z: 1.7715411}
+  m_LocalScale: {x: 0.4243364, y: 0.4243364, z: 0.4243364}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 14663913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 678, y: -802}
+  m_AnchoredPosition: {x: 166, y: -166}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &22857405
@@ -346,7 +346,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -993.677, y: 0, z: -171.5232, w: 0}
+  m_margin: {x: -993.677, y: 0, z: -79.469635, w: -83.76509}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -404,7 +404,7 @@ RectTransform:
   m_GameObject: {fileID: 89263490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.1301603, y: 4.1301603, z: 4.1301603}
+  m_LocalScale: {x: 1.0693618, y: 0.87803745, z: 0.87803745}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 973053064}
@@ -412,7 +412,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1201, y: -160}
+  m_AnchoredPosition: {x: 254, y: -105}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &89263492
@@ -718,7 +718,6 @@ MonoBehaviour:
   agent: {fileID: 318962831}
   crossingDestination: {fileID: 1333810141}
   trafficLight: {fileID: 1866726861}
-  missionManager: {fileID: 813050697}
   runningSpeed: 5
   stoppingDistance: 0.2
   animator: {fileID: 0}
@@ -1214,7 +1213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -659, y: 974}
+  m_AnchoredPosition: {x: -138.7, y: 202.9}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &789537420
@@ -1337,13 +1336,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1266401b53c85d4b82c4a061c6d1540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CorrectCrossingMission
-  wrongNPCGirl: {fileID: 318962832}
-  tryItPanel: {fileID: 2138764957}
+  rightNPC: {fileID: 332878784}
+  tryItCanvas: {fileID: 14663909}
   tryItText: {fileID: 22857405}
   okayButton: {fileID: 89263492}
   tryItMessage: Now let me see you show the right way.
-  completionPanel: {fileID: 0}
-  completionText: {fileID: 0}
+  completionCanvas: {fileID: 0}
+  completionTitleText: {fileID: 0}
+  completionMessageText: {fileID: 0}
   pointsText: {fileID: 0}
   completionMessage: Well done! You demonstrated the correct way! Keep it up.
   pointsAwarded: 100
@@ -1835,14 +1835,14 @@ RectTransform:
   m_GameObject: {fileID: 975459921}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8045, y: 1.8045, z: 1.8045}
+  m_LocalScale: {x: 0.41141322, y: 0.41141322, z: 0.41141322}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1216413903}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -438, y: 985}
+  m_AnchoredPosition: {x: 0, y: 205.6}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1092057490
@@ -2027,7 +2027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -7424,14 +7424,14 @@ RectTransform:
   m_GameObject: {fileID: 2138764957}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.18977962, z: 1}
+  m_LocalScale: {x: 1.0246, y: 0.18977962, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 14663913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -871}
+  m_AnchoredPosition: {x: 0, y: -183}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2138764959

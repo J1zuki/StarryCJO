@@ -3,9 +3,8 @@
  * Date: 10th August 2026
  * File: NPCGirl.cs
  * Description:
- * Controls WrongNPC during the unsafe crossing demonstration.
- * WrongNPC crosses the road on red, informs the mission controller
- * when she reaches WrongWayCrossPoint, and can later reset
+ * Controls NPCGirl during the unsafe crossing demonstration.
+ * NPCGirl crosses the road on red and can later reset
  * to her original starting position.
  */
 
@@ -13,7 +12,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Controls WrongNPC's unsafe crossing demonstration
+/// Controls NPCGirl's unsafe crossing demonstration
 /// and allows her to return to her original position.
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
@@ -23,7 +22,6 @@ public class NPCGirl : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Transform crossingDestination;
     [SerializeField] private TrafficLightControl trafficLight;
-    [SerializeField] private CorrectCrossingMission missionManager;
 
     [Header("Movement")]
     [SerializeField] private float runningSpeed = 4.5f;
@@ -40,13 +38,13 @@ public class NPCGirl : MonoBehaviour
     private Quaternion originalRotation;
 
     /// <summary>
-    /// Returns whether WrongNPC has completed
+    /// Returns whether NPCGirl has completed
     /// the unsafe crossing demonstration.
     /// </summary>
     public bool HasCrossed => hasCrossed;
 
     /// <summary>
-    /// Saves the original position and prepares
+    /// Saves NPCGirl's original position and prepares
     /// the NavMeshAgent when the scene begins.
     /// </summary>
     private void Awake()
@@ -74,15 +72,15 @@ public class NPCGirl : MonoBehaviour
         else
         {
             Debug.LogError(
-                "WrongNPC is not standing on the NavMesh.",
+                "NPCGirl is not standing on the NavMesh.",
                 gameObject
             );
         }
     }
 
     /// <summary>
-    /// Updates animation and checks whether
-    /// WrongNPC has reached WrongWayCrossPoint.
+    /// Updates NPCGirl's animation and checks whether
+    /// she has reached WrongWayCrossPoint.
     /// </summary>
     private void Update()
     {
@@ -100,7 +98,7 @@ public class NPCGirl : MonoBehaviour
         if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
         {
             Debug.LogError(
-                "WrongNPC path is invalid.",
+                "NPCGirl path is invalid.",
                 gameObject
             );
 
@@ -111,7 +109,7 @@ public class NPCGirl : MonoBehaviour
         if (agent.pathStatus == NavMeshPathStatus.PathPartial)
         {
             Debug.LogError(
-                "WrongNPC path is partial. Check the NavMesh connection.",
+                "NPCGirl path is partial. Check the NavMesh connection.",
                 gameObject
             );
 
@@ -132,8 +130,8 @@ public class NPCGirl : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts WrongNPC crossing while
-    /// the pedestrian signal is red.
+    /// Starts NPCGirl crossing the road while
+    /// the pedestrian traffic signal is red.
     /// </summary>
     public void StartWrongCrossing()
     {
@@ -163,7 +161,7 @@ public class NPCGirl : MonoBehaviour
         if (!agent.isOnNavMesh)
         {
             Debug.LogError(
-                "WrongNPC is not standing on the NavMesh.",
+                "NPCGirl is not standing on the NavMesh.",
                 gameObject
             );
 
@@ -174,7 +172,7 @@ public class NPCGirl : MonoBehaviour
             TrafficLightControl.LightState.Red)
         {
             Debug.LogWarning(
-                "WrongNPC should only cross while the pedestrian light is RED.",
+                "NPCGirl should only cross while the pedestrian light is RED.",
                 gameObject
             );
 
@@ -192,7 +190,7 @@ public class NPCGirl : MonoBehaviour
             path.status != NavMeshPathStatus.PathComplete)
         {
             Debug.LogError(
-                "WrongNPC cannot find a complete path to WrongWayCrossPoint. " +
+                "NPCGirl cannot find a complete path to WrongWayCrossPoint. " +
                 "Path status: " + path.status,
                 gameObject
             );
@@ -207,14 +205,14 @@ public class NPCGirl : MonoBehaviour
         isCrossing = true;
 
         Debug.Log(
-            "WrongNPC started the unsafe crossing.",
+            "NPCGirl started the unsafe crossing.",
             gameObject
         );
     }
 
     /// <summary>
-    /// Stops WrongNPC at WrongWayCrossPoint
-    /// and unlocks RightNPC interaction.
+    /// Stops NPCGirl after she reaches
+    /// WrongWayCrossPoint.
     /// </summary>
     private void FinishWrongCrossing()
     {
@@ -227,26 +225,14 @@ public class NPCGirl : MonoBehaviour
 
         UpdateAnimation();
 
-        if (missionManager != null)
-        {
-            missionManager.NPCWrongCrossingFinished();
-
-            Debug.Log(
-                "WrongNPC finished crossing. RightNPC can now be interacted with.",
-                gameObject
-            );
-        }
-        else
-        {
-            Debug.LogError(
-                "CorrectCrossingMission is NOT assigned to WrongNPC.",
-                gameObject
-            );
-        }
+        Debug.Log(
+            "NPCGirl reached WrongWayCrossPoint.",
+            gameObject
+        );
     }
 
     /// <summary>
-    /// Returns WrongNPC to her exact original
+    /// Returns NPCGirl to her exact original
     /// position and rotation.
     /// </summary>
     public void ResetToOriginalPosition()
@@ -254,7 +240,7 @@ public class NPCGirl : MonoBehaviour
         if (!agent.isOnNavMesh)
         {
             Debug.LogError(
-                "WrongNPC cannot reset because she is not on the NavMesh.",
+                "NPCGirl cannot reset because she is not on the NavMesh.",
                 gameObject
             );
 
@@ -264,12 +250,13 @@ public class NPCGirl : MonoBehaviour
         agent.isStopped = true;
         agent.ResetPath();
 
-        bool warped = agent.Warp(originalPosition);
+        bool warped =
+            agent.Warp(originalPosition);
 
         if (!warped)
         {
             Debug.LogError(
-                "WrongNPC could not return to her original position.",
+                "NPCGirl could not return to her original position.",
                 gameObject
             );
 
@@ -286,13 +273,13 @@ public class NPCGirl : MonoBehaviour
         UpdateAnimation();
 
         Debug.Log(
-            "WrongNPC returned to her original position.",
+            "NPCGirl returned to her original position.",
             gameObject
         );
     }
 
     /// <summary>
-    /// Stops WrongNPC and clears the current NavMesh path.
+    /// Stops NPCGirl and clears the current NavMesh path.
     /// </summary>
     private void StopNPC()
     {
@@ -309,7 +296,7 @@ public class NPCGirl : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates the Animator Speed parameter
+    /// Updates NPCGirl's Animator Speed parameter
     /// using the NavMeshAgent movement speed.
     /// </summary>
     private void UpdateAnimation()
@@ -327,9 +314,15 @@ public class NPCGirl : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks whether the Animator contains
-    /// the requested parameter.
+    /// Checks whether NPCGirl's Animator contains
+    /// the specified parameter.
     /// </summary>
+    /// <param name="parameterName">
+    /// Animator parameter to check.
+    /// </param>
+    /// <returns>
+    /// True when the parameter exists.
+    /// </returns>
     private bool HasAnimatorParameter(
         string parameterName)
     {
