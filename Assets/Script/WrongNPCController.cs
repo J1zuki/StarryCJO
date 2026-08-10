@@ -6,14 +6,14 @@
  * Controls the unsafe pedestrian NPC demonstration.
  * The NPC waits at the traffic light and runs across the road
  * when instructed by the WrongWayDialogue trigger.
-*/
+ */
 
 using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Controls the NPC that demonstrates the unsafe behaviour
-/// of crossing the road while the pedestrian traffic light is red.
+/// Controls the NPC that demonstrates unsafe behaviour
+/// by crossing the road while the pedestrian traffic light is red.
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class WrongNPCController : MonoBehaviour
@@ -55,8 +55,8 @@ public class WrongNPCController : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks the NPC's movement and stops the NPC
-    /// after reaching the opposite side of the road.
+    /// Checks the NPC movement and stops the NPC
+    /// after reaching the crossing destination.
     /// </summary>
     private void Update()
     {
@@ -71,6 +71,17 @@ public class WrongNPCController : MonoBehaviour
         if (agent.pathPending)
             return;
 
+        if (agent.pathStatus != NavMeshPathStatus.PathComplete)
+        {
+            Debug.LogError(
+                "Wrong NPC does not have a complete NavMesh path.",
+                gameObject
+            );
+
+            StopNPC();
+            return;
+        }
+
         if (float.IsInfinity(agent.remainingDistance))
             return;
 
@@ -84,8 +95,8 @@ public class WrongNPCController : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts the unsafe crossing demonstration only when
-    /// the pedestrian traffic signal is currently red.
+    /// Starts the unsafe crossing demonstration only if
+    /// the pedestrian traffic light is currently red.
     /// </summary>
     public void StartWrongCrossing()
     {
@@ -102,6 +113,16 @@ public class WrongNPCController : MonoBehaviour
             return;
         }
 
+        if (trafficLight == null)
+        {
+            Debug.LogError(
+                "Traffic Light has not been assigned to WrongNPCController.",
+                gameObject
+            );
+
+            return;
+        }
+
         if (!agent.isOnNavMesh)
         {
             Debug.LogError(
@@ -112,12 +133,30 @@ public class WrongNPCController : MonoBehaviour
             return;
         }
 
-        if (trafficLight != null &&
-            trafficLight.CurrentState !=
+        if (trafficLight.CurrentState !=
             TrafficLightControl.LightState.Red)
         {
             Debug.LogWarning(
-                "Wrong NPC demonstration can only start while the light is red.",
+                "Wrong NPC can only start crossing while the pedestrian light is red.",
+                gameObject
+            );
+
+            return;
+        }
+
+        NavMeshPath path = new NavMeshPath();
+
+        bool pathFound =
+            agent.CalculatePath(
+                crossingDestination.position,
+                path
+            );
+
+        if (!pathFound ||
+            path.status != NavMeshPathStatus.PathComplete)
+        {
+            Debug.LogError(
+                "Wrong NPC cannot find a complete path to the crossing destination.",
                 gameObject
             );
 
@@ -125,27 +164,15 @@ public class WrongNPCController : MonoBehaviour
         }
 
         agent.speed = runningSpeed;
+        agent.stoppingDistance = stoppingDistance;
         agent.isStopped = false;
 
-        bool pathStarted =
-            agent.SetDestination(
-                crossingDestination.position
-            );
-
-        if (!pathStarted)
-        {
-            Debug.LogError(
-                "Wrong NPC could not create a path to the crossing destination.",
-                gameObject
-            );
-
-            return;
-        }
+        agent.SetPath(path);
 
         isCrossing = true;
 
         Debug.Log(
-            "Wrong NPC is crossing while the pedestrian signal is RED.",
+            "Wrong NPC started crossing while the pedestrian light is RED.",
             gameObject
         );
     }
@@ -159,11 +186,7 @@ public class WrongNPCController : MonoBehaviour
         hasFinished = true;
         isCrossing = false;
 
-        agent.isStopped = true;
-        agent.velocity = Vector3.zero;
-        agent.ResetPath();
-
-        UpdateAnimation();
+        StopNPC();
 
         Debug.Log(
             "Wrong NPC finished the unsafe crossing.",
@@ -172,8 +195,23 @@ public class WrongNPCController : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates the NPC's Animator Speed parameter
-    /// using the current NavMeshAgent movement speed.
+    /// Stops the NavMeshAgent and clears its current path.
+    /// </summary>
+    private void StopNPC()
+    {
+        if (!agent.isOnNavMesh)
+            return;
+
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+        agent.ResetPath();
+
+        UpdateAnimation();
+    }
+
+    /// <summary>
+    /// Updates the NPC Animator Speed parameter
+    /// using the NavMeshAgent movement speed.
     /// </summary>
     private void UpdateAnimation()
     {
@@ -191,13 +229,13 @@ public class WrongNPCController : MonoBehaviour
 
     /// <summary>
     /// Checks whether the NPC Animator contains
-    /// the specified parameter.
+    /// a parameter with the specified name.
     /// </summary>
     /// <param name="parameterName">
-    /// Name of the Animator parameter.
+    /// The name of the Animator parameter.
     /// </param>
     /// <returns>
-    /// True if the Animator parameter exists.
+    /// Returns true when the parameter exists.
     /// </returns>
     private bool HasAnimatorParameter(
         string parameterName)
