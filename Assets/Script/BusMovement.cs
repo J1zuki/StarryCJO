@@ -11,9 +11,12 @@ public class BusMovement : MonoBehaviour
     /// </summary>
     public Transform BusStopPoint;
     public Transform TrafficStopPoint;
+    public Transform RightLanePoint;
+    public Transform BusEndPoint;
 
     public float speed = 5f;  //speed of the bus
-    public float waitTime = 10f; //time to wait at the bus stop
+    public float waitTime = 20f; //time to wait at the bus stop
+    public float trafficWaitTime = 10f; //time to wait at the traffic light
     private int stage = 0;
     private bool waiting = false; // checks whether the bus is waiting at the bus stop
 
@@ -40,52 +43,97 @@ public class BusMovement : MonoBehaviour
             MoveBus(TrafficStopPoint);
 
             if (Vector2.Distance(
-            new Vector2(transform.position.x, transform.position.z),
-            new Vector2(TrafficStopPoint.position.x, TrafficStopPoint.position.z)
-            ) < 0.1f)
+                new Vector2(transform.position.x, transform.position.z),
+                new Vector2(TrafficStopPoint.position.x, TrafficStopPoint.position.z)
+                ) < 0.1f && !waiting)
             {
-                stage = 2;
-                Debug.Log("Bus stopped at traffic light");
+                StartCoroutine(WaitAtTrafficLight());
             }
         }
-        /// <summary>
-        /// Moves the bus towards the given target position.
-        /// The Y position is kept unchanged so the bus stays on the road.
-        /// </summary>
-        /// <param name="target">The target point that the bus should move towards.</param>
-        void MoveBus(Transform target)
+        // Stage 2: Change to the right lane.
+        else if (stage == 2)
         {
-            Vector3 targetPosition = new Vector3(
-                target.position.x,
-                transform.position.y,
-                target.position.z
-            );
+            MoveBus(RightLanePoint);
 
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                targetPosition,
-                speed * Time.deltaTime
-            );
+            if (Vector2.Distance(
+                new Vector2(transform.position.x, transform.position.z),
+                new Vector2(RightLanePoint.position.x, RightLanePoint.position.z)
+                ) < 0.1f)
+            {
+                stage = 3;
+                Debug.Log("Bus changed to right lane");
+            }
         }
 
-        /// <summary>
-        /// Stops the bus at the bus stop for the specified waiting time
-        /// before allowing it to continue towards the traffic light.
-        /// </summary>
-        IEnumerator WaitAtBusStop()
+        // Stage 3: Continue straight to the bus end point.
+        else if (stage == 3)
         {
-            waiting = true;
+            MoveBus(BusEndPoint);
 
-            Debug.Log("Bus reached bus stop");
-
-            yield return new WaitForSeconds(waitTime);
-
-            Debug.Log("Bus leaving bus stop");
-
-            stage = 1;
-            waiting = false;
+            if (Vector2.Distance(
+                new Vector2(transform.position.x, transform.position.z),
+                new Vector2(BusEndPoint.position.x, BusEndPoint.position.z)
+                ) < 0.1f)
+            {
+                stage = 4;
+                Debug.Log("Bus reached the bus end point");
+            }
         }
+    }
+    /// <summary>
+    /// Moves the bus towards the given target position.
+    /// The Y position is kept unchanged so the bus stays on the road.
+    /// </summary>
+    /// <param name="target">The target point that the bus should move towards.</param>
+    void MoveBus(Transform target)
+    {
+        Vector3 targetPosition = new Vector3(
+            target.position.x,
+            transform.position.y,
+            target.position.z
+        );
 
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            targetPosition,
+            speed * Time.deltaTime
+        );
+    }
+
+    /// <summary>
+    /// Stops the bus at the bus stop for the specified waiting time
+    /// before allowing it to continue towards the bus end point.
+    /// </summary>
+    IEnumerator WaitAtBusStop()
+    {
+        waiting = true;
+
+        Debug.Log("Bus reached bus stop");
+
+        yield return new WaitForSeconds(waitTime);
+
+        Debug.Log("Bus leaving bus stop");
+
+        stage = 1;
+        waiting = false;
+    }
+    /// <summary>
+    /// Stops the bus at the traffic light for the specified waiting time
+    /// before allowing it to continue towards the bus end point.
+    /// </summary>
+    IEnumerator WaitAtTrafficLight()
+    {
+        waiting = true;
+
+        Debug.Log("Bus stopped at traffic light");
+
+        yield return new WaitForSeconds(trafficWaitTime);
+
+        Debug.Log("Bus leaving traffic light");
+
+        waiting = false;
+        stage = 2;
     }
 }
+
 

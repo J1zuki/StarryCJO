@@ -197,6 +197,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 886645307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &156900683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 156900684}
+  m_Layer: 0
+  m_Name: RightLanePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &156900684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156900683}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -297.29, y: 10.57678, z: 396.83}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &184158618
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1443,6 +1474,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 47484835845192738, guid: 7d65e324934ca794489aeec0ce555086, type: 3}
   m_PrefabInstance: {fileID: 6313400364429420332}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &788837824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 788837825}
+  m_Layer: 0
+  m_Name: TrafficStopPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &788837825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788837824}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -293.29, y: 10.57678, z: 412.65}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &807012092
 GameObject:
   m_ObjectHideFlags: 0
@@ -1453,7 +1515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 807012093}
   m_Layer: 0
-  m_Name: TrafficStopPoint
+  m_Name: BusEndPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1468,7 +1530,7 @@ Transform:
   m_GameObject: {fileID: 807012092}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -294.1, y: 10.57678, z: 425.45}
+  m_LocalPosition: {x: -296.77, y: 10.57678, z: 230.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6961,9 +7023,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BusMovement
   BusStopPoint: {fileID: 551313371}
-  TrafficStopPoint: {fileID: 807012093}
+  TrafficStopPoint: {fileID: 788837825}
+  RightLanePoint: {fileID: 156900684}
+  BusEndPoint: {fileID: 807012093}
   speed: 5
-  waitTime: 10
+  waitTime: 20
+  trafficWaitTime: 10
 --- !u!1 &1463891795 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1925873226565265906, guid: 2553cec8fdb3eb643bbe9f2ec880c472, type: 3}
@@ -7732,6 +7797,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2931106489812019927, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -33.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3398983715775906058, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.22
@@ -8137,7 +8206,7 @@ PrefabInstance:
     - target: {fileID: 3832501145965666519, guid: 7d65e324934ca794489aeec0ce555086, type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 20809363a4ba5734baa986d97f3aa63c, type: 2}
+      objectReference: {fileID: 23800000, guid: 117cb362d5e1f9c498378f848330a424, type: 2}
     - target: {fileID: 4277540887636090136, guid: 7d65e324934ca794489aeec0ce555086, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5138612
@@ -8764,4 +8833,6 @@ SceneRoots:
   - {fileID: 1908997734}
   - {fileID: 184158618}
   - {fileID: 551313371}
+  - {fileID: 788837825}
+  - {fileID: 156900684}
   - {fileID: 807012093}
