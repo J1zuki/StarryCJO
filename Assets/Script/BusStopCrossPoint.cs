@@ -3,15 +3,17 @@
  * Date: 10th August 2026
  * File: BusStopCrossPoint.cs
  * Description:
- * Detects when the player reaches the bus-stop destination
- * after demonstrating the correct road-crossing method.
+ * Detects when PlayerCapsule reaches the bus stop
+ * after completing the correct road-crossing demonstration.
+ * It then tells CorrectCrossingMission to show
+ * the completion UI and award points.
  */
 
 using UnityEngine;
 
 /// <summary>
-/// Completes the correct-crossing mission when
-/// PlayerCapsule reaches the bus-stop destination.
+/// Completes the correct crossing mission when
+/// PlayerCapsule enters BusStopCrossPoint.
 /// </summary>
 public class BusStopCrossPoint : MonoBehaviour
 {
@@ -22,8 +24,8 @@ public class BusStopCrossPoint : MonoBehaviour
     private bool hasTriggered;
 
     /// <summary>
-    /// Detects PlayerCapsule entering BusStopCrossPoint
-    /// and completes the correct crossing mission.
+    /// Detects when PlayerCapsule enters
+    /// the BusStopCrossPoint trigger.
     /// </summary>
     /// <param name="other">
     /// Collider that entered the trigger.
@@ -39,7 +41,7 @@ public class BusStopCrossPoint : MonoBehaviour
         if (missionManager == null)
         {
             Debug.LogError(
-                "CorrectCrossingMission has not been assigned.",
+                "CorrectCrossingMission has not been assigned to BusStopCrossPoint.",
                 gameObject
             );
 
@@ -47,14 +49,21 @@ public class BusStopCrossPoint : MonoBehaviour
         }
 
         if (!missionManager.PlayerCanDemonstrate)
+        {
+            Debug.LogWarning(
+                "Player reached BusStopCrossPoint before the correct crossing demonstration started.",
+                gameObject
+            );
+
             return;
+        }
 
         hasTriggered = true;
 
         missionManager.CompleteCorrectCrossing();
 
         Debug.Log(
-            "Player reached BusStopCrossPoint.",
+            "Player reached BusStopCrossPoint. Completion UI opened.",
             gameObject
         );
     }

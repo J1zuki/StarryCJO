@@ -5,10 +5,10 @@
  * Description:
  * Controls the correct crossing mission.
  * The player interacts with RightNPC to open the TryIt Canvas.
- * After pressing Okay, the player can demonstrate
- * the correct road-crossing method.
+ * After pressing Okay, PlayerCapsule is moved to NextSpawnPoint
+ * before starting the correct road-crossing demonstration.
  * Reaching BusStopCrossPoint completes the mission
- * and displays the final result with points.
+ * and awards points.
  */
 
 using TMPro;
@@ -18,13 +18,19 @@ using UnityEngine.UI;
 /// <summary>
 /// Controls the correct crossing mission,
 /// including RightNPC interaction,
-/// TryIt Canvas, player demonstration,
+/// TryIt Canvas, player teleporting,
 /// final feedback, and points.
 /// </summary>
 public class CorrectCrossingMission : MonoBehaviour
 {
     [Header("Right NPC")]
     [SerializeField] private RightNPCInteraction rightNPC;
+
+    [Header("Player")]
+    [SerializeField] private Transform player;
+    [SerializeField] private CharacterController characterController;
+    [SerializeField] private Behaviour playerController;
+    [SerializeField] private Transform nextSpawnPoint;
 
     [Header("Try It Canvas")]
     [SerializeField] private GameObject tryItCanvas;
@@ -50,9 +56,6 @@ public class CorrectCrossingMission : MonoBehaviour
     [Header("Points")]
     [SerializeField] private int pointsAwarded = 100;
 
-    [Header("Player Control")]
-    [SerializeField] private Behaviour playerController;
-
     private int currentPoints;
     private bool tryItOpen;
     private bool playerCanDemonstrate;
@@ -66,15 +69,14 @@ public class CorrectCrossingMission : MonoBehaviour
         playerCanDemonstrate;
 
     /// <summary>
-    /// Returns whether the correct crossing mission
-    /// has already been completed.
+    /// Returns whether the mission has been completed.
     /// </summary>
     public bool MissionCompleted =>
         missionCompleted;
 
     /// <summary>
-    /// Hides the TryIt and completion Canvas objects
-    /// and prepares the Okay button when the scene begins.
+    /// Prepares the player references, hides the mission UI,
+    /// and prepares the Okay button.
     /// </summary>
     private void Start()
     {
@@ -83,42 +85,41 @@ public class CorrectCrossingMission : MonoBehaviour
         missionCompleted = false;
         currentPoints = 0;
 
-        if (tryItCanvas != null)
+        if (player == null)
         {
-            tryItCanvas.SetActive(false);
-        }
-        else
-        {
-            Debug.LogError(
-                "TryIt Canvas has not been assigned.",
-                gameObject
-            );
+            GameObject playerObject =
+                GameObject.FindGameObjectWithTag("Player");
+
+            if (playerObject != null)
+                player = playerObject.transform;
         }
 
-        if (completionCanvas != null)
+        if (player != null &&
+            characterController == null)
         {
-            completionCanvas.SetActive(false);
+            characterController =
+                player.GetComponent<CharacterController>();
         }
+
+        if (tryItCanvas != null)
+            tryItCanvas.SetActive(false);
+
+        if (completionCanvas != null)
+            completionCanvas.SetActive(false);
 
         if (okayButton != null)
         {
             okayButton.onClick.RemoveAllListeners();
+
             okayButton.onClick.AddListener(
                 StartPlayerDemonstration
-            );
-        }
-        else
-        {
-            Debug.LogError(
-                "Okay Button has not been assigned.",
-                gameObject
             );
         }
     }
 
     /// <summary>
-    /// Opens the TryIt Canvas immediately after
-    /// the player presses E beside RightNPC.
+    /// Opens the TryIt Canvas after the player
+    /// presses E beside RightNPC.
     /// </summary>
     public void ShowTryItCanvas()
     {
@@ -140,10 +141,7 @@ public class CorrectCrossingMission : MonoBehaviour
         tryItCanvas.SetActive(true);
 
         if (tryItText != null)
-        {
-            tryItText.text =
-                tryItMessage;
-        }
+            tryItText.text = tryItMessage;
 
         DisablePlayerControl();
 
@@ -153,15 +151,15 @@ public class CorrectCrossingMission : MonoBehaviour
         Cursor.visible = true;
 
         Debug.Log(
-            "TryIt Canvas opened after interacting with RightNPC.",
+            "TryIt Canvas opened.",
             gameObject
         );
     }
 
     /// <summary>
-    /// Handles the Okay button on the TryIt Canvas.
-    /// It hides the Canvas and allows the player
-    /// to demonstrate the correct crossing method.
+    /// Handles the Okay button.
+    /// Hides the TryIt Canvas, moves PlayerCapsule
+    /// to NextSpawnPoint, and begins the correct crossing.
     /// </summary>
     public void StartPlayerDemonstration()
     {
@@ -169,11 +167,12 @@ public class CorrectCrossingMission : MonoBehaviour
             return;
 
         if (tryItCanvas != null)
-        {
             tryItCanvas.SetActive(false);
-        }
 
         tryItOpen = false;
+
+        TeleportPlayerToNextSpawn();
+
         playerCanDemonstrate = true;
 
         EnablePlayerControl();
@@ -184,7 +183,52 @@ public class CorrectCrossingMission : MonoBehaviour
         Cursor.visible = false;
 
         Debug.Log(
-            "TryIt Canvas closed. Player can now demonstrate the correct crossing.",
+            "Player teleported to NextSpawnPoint and can now demonstrate the correct crossing.",
+            gameObject
+        );
+    }
+
+    /// <summary>
+    /// Moves PlayerCapsule to NextSpawnPoint.
+    /// The CharacterController is temporarily disabled
+    /// so the transform position can be changed safely.
+    /// </summary>
+    private void TeleportPlayerToNextSpawn()
+    {
+        if (player == null)
+        {
+            Debug.LogError(
+                "PlayerCapsule is not assigned.",
+                gameObject
+            );
+
+            return;
+        }
+
+        if (nextSpawnPoint == null)
+        {
+            Debug.LogError(
+                "NextSpawnPoint is not assigned.",
+                gameObject
+            );
+
+            return;
+        }
+
+        if (characterController != null)
+            characterController.enabled = false;
+
+        player.position =
+            nextSpawnPoint.position;
+
+        player.rotation =
+            nextSpawnPoint.rotation;
+
+        if (characterController != null)
+            characterController.enabled = true;
+
+        Debug.Log(
+            "PlayerCapsule moved to NextSpawnPoint.",
             gameObject
         );
     }
@@ -196,14 +240,7 @@ public class CorrectCrossingMission : MonoBehaviour
     public void CompleteCorrectCrossing()
     {
         if (!playerCanDemonstrate)
-        {
-            Debug.LogWarning(
-                "Player reached BusStopCrossPoint before starting the correct crossing demonstration.",
-                gameObject
-            );
-
             return;
-        }
 
         if (missionCompleted)
             return;
@@ -216,37 +253,19 @@ public class CorrectCrossingMission : MonoBehaviour
         DisablePlayerControl();
 
         if (completionCanvas != null)
-        {
             completionCanvas.SetActive(true);
-        }
-        else
-        {
-            Debug.LogError(
-                "Completion Canvas has not been assigned.",
-                gameObject
-            );
-
-            return;
-        }
 
         if (completionTitleText != null)
-        {
-            completionTitleText.text =
-                "Well Done!";
-        }
+            completionTitleText.text = "Well Done!";
 
         if (completionMessageText != null)
-        {
-            completionMessageText.text =
-                completionMessage;
-        }
+            completionMessageText.text = completionMessage;
 
         if (pointsText != null)
         {
             pointsText.text =
                 "+" + pointsAwarded +
-                " Points\n" +
-                "Total Points: " +
+                " Points\nTotal Points: " +
                 currentPoints;
         }
 
@@ -254,24 +273,15 @@ public class CorrectCrossingMission : MonoBehaviour
             CursorLockMode.None;
 
         Cursor.visible = true;
-
-        Debug.Log(
-            "Correct crossing completed. Player received " +
-            pointsAwarded + " points.",
-            gameObject
-        );
     }
 
     /// <summary>
-    /// Disables PlayerCapsule movement while
-    /// a mission Canvas is open.
+    /// Disables PlayerCapsule movement.
     /// </summary>
     private void DisablePlayerControl()
     {
         if (playerController != null)
-        {
             playerController.enabled = false;
-        }
     }
 
     /// <summary>
@@ -280,14 +290,12 @@ public class CorrectCrossingMission : MonoBehaviour
     private void EnablePlayerControl()
     {
         if (playerController != null)
-        {
             playerController.enabled = true;
-        }
     }
 
     /// <summary>
-    /// Removes the Okay button listener
-    /// when this component is destroyed.
+    /// Removes the Okay button listener when
+    /// this component is destroyed.
     /// </summary>
     private void OnDestroy()
     {
