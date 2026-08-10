@@ -1,5 +1,5 @@
 /*
- * Author: Joyce Kwek Siok Teng
+ * Author: Joyce Kwek
  * Date: 10th August 2026
  * File: WrongNPCController.cs
  * Description:
