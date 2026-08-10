@@ -6,7 +6,7 @@
  * Controls the unsafe pedestrian NPC demonstration.
  * The NPC waits at the traffic light and runs across the road
  * when instructed by the WrongWayDialogue trigger.
- */
+*/
 
 using UnityEngine;
 using UnityEngine.AI;
