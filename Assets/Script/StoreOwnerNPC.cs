@@ -4,102 +4,76 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class StoreOwnerNPC : MonoBehaviour
 {
-    [Header("Detection Settings")]
-    public float detectionRadius = 8f;
-    public float stoppingDistance = 2f;
-    
-    [Header("References")]
-    public Transform playerCapsule;
-    public JaywalkingUI missionUI;
+    [Header("NPC Movement & Distance Settings")]
+    [SerializeField] private float stoppingDistance = 2.0f;
+    [SerializeField] private float interactDistance = 3.0f;
+    [SerializeField] private string greetingMessage = "Welcome to 7-Eleven! What can I get for you?";
+
+    [Header("Keybindings")]
+    [SerializeField] private KeyCode interactKey = KeyCode.E;
 
     private NavMeshAgent agent;
-    private Vector3 originalPosition;
-    private bool playerIsNear = false;
-    private bool hasTriggeredDialogue = false;
+    private Transform playerTransform;
+    private bool playerIsNearStore = false;
+    private bool isPlayerInInteractRange = false;
 
-    void Start()
+    private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent();
         agent.stoppingDistance = stoppingDistance;
-        originalPosition = transform.position;
-
-        // Auto-find player by tag if not manually assigned
-        if (playerCapsule == null)
-        {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null) playerCapsule = playerObj.transform;
-        }
     }
 
-    void Update()
+    private void Update()
     {
-        if (playerCapsule == null) return;
-
-        float distanceToPlayer = Vector3.Distance(transform.position, playerCapsule.position);
-
-        // Detect if player is close to 7-Eleven
-        if (distanceToPlayer <= detectionRadius)
+        if (playerIsNearStore && playerTransform != null)
         {
-            playerIsNear = true;
-            agent.SetDestination(playerCapsule.position);
+            // Move NavMeshAgent toward player
+            agent.SetDestination(playerTransform.position);
 
-            // Turn to face player when in stopping distance
-            if (distanceToPlayer <= stoppingDistance + 0.5f)
+            // Check distance between NPC and Player
+            float distToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+            isPlayerInInteractRange = distToPlayer <= interactDistance;
+
+            // Face the player when stopped
+            if (distToPlayer <= stoppingDistance)
             {
                 LookAtPlayer();
-
-                // Open dialogue UI if not already opened
-                if (!hasTriggeredDialogue && missionUI != null)
-                {
-                    hasTriggeredDialogue = true;
-                    missionUI.ShowPrompt("Hey kid! Need some quick cash? Go cross the street outside without using the crosswalk—give the local cops a hard time!", AcceptMission, DeclineMission);
-                }
             }
-        }
-        else if (playerIsNear)
-        {
-            // Player left the area -> Return NPC to store
-            playerIsNear = false;
-            agent.SetDestination(originalPosition);
+
+            // Interact trigger
+            if (isPlayerInInteractRange && Input.GetKeyDown(interactKey))
+            {
+                DialogueUI.Instance.OpenDialogue(greetingMessage);
+            }
         }
     }
 
     private void LookAtPlayer()
     {
-        Vector3 direction = (playerCapsule.position - transform.position).normalized;
-        direction.y = 0; // Keep NPC upright
+        Vector3 direction = (playerTransform.position - transform.position).normalized;
+        direction.y = 0; // Keep rotation upright
         if (direction != Vector3.zero)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 5f);
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
         }
     }
 
-    private void AcceptMission()
+    // Triggered by the Store Zone script or direct trigger detection
+    public void OnPlayerEnterZone(Transform player)
     {
-        Debug.Log("Mission Accepted: Jaywalking!");
-        if (JaywalkingMission.Instance != null)
+        playerTransform = player;
+        playerIsNearStore = true;
+    }
+
+    public void OnPlayerExitZone()
+    {
+        playerIsNearStore = false;
+        playerTransform = null;
+        if (agent.isOnNavMesh)
         {
-            JaywalkingMission.Instance.StartMission();
+            agent.ResetPath();
         }
-        missionUI.HidePrompt();
-    }
-
-    private void DeclineMission()
-    {
-        Debug.Log("Mission Declined.");
-        missionUI.HidePrompt();
-        // Allow player to trigger dialogue again later if desired
-        Invoke(nameof(ResetDialogue), 5f);
-    }
-
-    private void ResetDialogue()
-    {
-        hasTriggeredDialogue = false;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        DialogueUI.Instance.CloseDialogue();
     }
 }
