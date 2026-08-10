@@ -391,15 +391,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2563297373110213474, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 45.36
+      value: 42.64
       objectReference: {fileID: 0}
     - target: {fileID: 2563297373110213474, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.166
+      value: -1.15
       objectReference: {fileID: 0}
     - target: {fileID: 2563297373110213474, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.9
+      value: -4.38
       objectReference: {fileID: 0}
     - target: {fileID: 2563297373110213474, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -469,9 +469,16 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 76025d51bb428254eb175134dc7da020, type: 2}
+    - target: {fileID: 8679757490863890365, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2563297373110213474, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 791856529}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5436741564957258347, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
       insertIndex: -1
@@ -479,6 +486,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5436741564957258347, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 411118805}
+    - targetCorrespondingSourceObject: {fileID: 5436741564957258347, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 411118807}
   m_SourcePrefab: {fileID: 100100000, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
 --- !u!1 &411118801 stripped
 GameObject:
@@ -528,6 +538,27 @@ MonoBehaviour:
   interactDistance: 3
   greetingMessage: Welcome to 7-Eleven! What can I get for you?
   interactKey: 101
+--- !u!65 &411118807
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411118801}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.9945283, z: 1}
+  m_Center: {x: 0, y: 0.4972642, z: -0}
 --- !u!4 &462776979 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 664939482308912296, guid: eed4e72bd000f604396097f4d48cd740, type: 3}
@@ -607,12 +638,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791856528}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.399994, y: -1.1166086, z: 2.591919}
-  m_LocalScale: {x: 1.76398, y: -0.06752692, z: 1.76398}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.096378036, y: 0.027999973, z: 1.1621467}
+  m_LocalScale: {x: 1, y: -0.038281005, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1870983889}
+  m_Father: {fileID: 411118803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &791856530
 BoxCollider:
@@ -6013,7 +6044,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2114551550}
-  - {fileID: 791856529}
   - {fileID: 411118803}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6034,6 +6064,7 @@ GameObject:
   - component: {fileID: 2114551549}
   - component: {fileID: 2114551548}
   - component: {fileID: 2114551547}
+  - component: {fileID: 2114551551}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -6126,6 +6157,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2114551551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114551546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb76164518379e94d9f9dae0f43b1eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueUI
+  dialoguePanel: {fileID: 1458948276857666799}
+  dialogueText: {fileID: 4450675407700689376}
 --- !u!224 &90115108919151049
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6417,7 +6462,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2566855282069553810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6644,6 +6689,10 @@ PrefabInstance:
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: aed4930e0feb21d498491db8ada03e0b, type: 2}
+    - target: {fileID: 9135681014555504655, guid: eed4e72bd000f604396097f4d48cd740, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6915,7 +6964,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2566855282069553810}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2114551551}
+        m_TargetAssemblyTypeName: DialogueUI, Assembly-CSharp
+        m_MethodName: OnLeaveButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4973492142466845847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7110,7 +7171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &5869993146544385165
 GameObject:
   m_ObjectHideFlags: 0
@@ -7128,7 +7189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1001 &5983421569601303888
 PrefabInstance:
   m_ObjectHideFlags: 0
