@@ -5855,6 +5855,10 @@ PrefabInstance:
       propertyPath: characterController
       value: 
       objectReference: {fileID: 1463891813}
+    - target: {fileID: 311995823086964016, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 391734324425612439, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5907,6 +5911,18 @@ PrefabInstance:
       propertyPath: trafficPromptPanel
       value: 
       objectReference: {fileID: 414071220}
+    - target: {fileID: 3075570950431476908, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3075570950431476908, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 3075570950431476908, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 3089599579900763936, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
       propertyPath: trafficLight
       value: 
@@ -5916,8 +5932,24 @@ PrefabInstance:
       value: 'Mission 2 - CorrectWayMission '
       objectReference: {fileID: 0}
     - target: {fileID: 4078514433579649102, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5162854
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078514433579649102, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5162854
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078514433579649102, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5162854
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078514433579649102, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 538
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078514433579649102, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 477
       objectReference: {fileID: 0}
     - target: {fileID: 7610347723033623750, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
       propertyPath: m_text
@@ -5941,7 +5973,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8140547127300880688, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -552
+      value: -274
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140547127300880688, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 476
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
