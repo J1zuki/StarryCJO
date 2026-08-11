@@ -1,5 +1,5 @@
 /*
- * Author: Cylina ho
+ * Author: Joyce Kwek
  * Date: 11th August 2026
  * File: TrafficLightControl.cs
  * Description:
@@ -46,8 +46,7 @@ public class TrafficLightControl : MonoBehaviour
     [SerializeField] private float delayBeforeGreen = 2f;
     [SerializeField] private float greenDuration = 6f;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
+    [Header("Audio Clips")]
     [SerializeField] private AudioClip buttonClickSFX;
     [SerializeField] private AudioClip greenBeepSFX;
 
@@ -65,15 +64,6 @@ public class TrafficLightControl : MonoBehaviour
     /// has already been pressed.
     /// </summary>
     public bool ButtonPressed => buttonPressed;
-
-    private void Awake()
-    {
-        // Auto-assign AudioSource component if missing in Inspector
-        if (audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
-    }
 
     /// <summary>
     /// Sets the pedestrian traffic light to red
@@ -185,22 +175,14 @@ public class TrafficLightControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Plays a traffic-light sound clip.
+    /// Plays an audio clip at the position of this GameObject
+    /// without requiring an AudioSource component.
     /// </summary>
-    public void PlaySound(AudioClip audioClip)
+    private void PlaySound(AudioClip audioClip)
     {
-        if (audioSource == null)
+        if (audioClip != null)
         {
-            Debug.LogWarning($"[TrafficLightControl] AudioSource component missing on {gameObject.name}!", this);
-            return;
+            AudioSource.PlayClipAtPoint(audioClip, transform.position);
         }
-
-        if (audioClip == null)
-        {
-            Debug.LogWarning($"[TrafficLightControl] AudioClip is unassigned on {gameObject.name}!", this);
-            return;
-        }
-
-        audioSource.PlayOneShot(audioClip);
     }
 }
