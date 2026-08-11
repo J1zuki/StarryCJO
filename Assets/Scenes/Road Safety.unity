@@ -9662,6 +9662,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5035474849480921450, guid: 2f13d8066872fcd4fbd0a5aaf86ddbe2, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: c4c4664f2cb8b7e4a812bb47fa27ab7e, type: 2}
     - target: {fileID: 8367929796856119729, guid: 2f13d8066872fcd4fbd0a5aaf86ddbe2, type: 3}
       propertyPath: m_Name
       value: MountainTerrain
