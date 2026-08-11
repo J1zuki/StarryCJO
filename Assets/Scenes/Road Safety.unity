@@ -6582,7 +6582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6934600154888760002, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 186
+      value: 411
       objectReference: {fileID: 0}
     - target: {fileID: 6934600154888760002, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6623,6 +6623,10 @@ PrefabInstance:
     - target: {fileID: 7613428515688407345, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
       propertyPath: m_margin.x
       value: -290.30252
+      objectReference: {fileID: 0}
+    - target: {fileID: 7613428515688407345, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      propertyPath: m_margin.z
+      value: 239.53017
       objectReference: {fileID: 0}
     - target: {fileID: 7959874293638542999, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
       propertyPath: player
