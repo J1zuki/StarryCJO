@@ -1,5 +1,5 @@
 /*
- * Author: Joyce Kwek
+ * Author: Cylina ho
  * Date: 11th August 2026
  * File: TrafficLightControl.cs
  * Description:
@@ -58,15 +58,22 @@ public class TrafficLightControl : MonoBehaviour
     /// Returns the current pedestrian
     /// traffic-light state.
     /// </summary>
-    public LightState CurrentState =>
-        currentState;
+    public LightState CurrentState => currentState;
 
     /// <summary>
     /// Returns whether the crossing button
     /// has already been pressed.
     /// </summary>
-    public bool ButtonPressed =>
-        buttonPressed;
+    public bool ButtonPressed => buttonPressed;
+
+    private void Awake()
+    {
+        // Auto-assign AudioSource component if missing in Inspector
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+    }
 
     /// <summary>
     /// Sets the pedestrian traffic light to red
@@ -74,9 +81,7 @@ public class TrafficLightControl : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        SetLightState(
-            LightState.Red
-        );
+        SetLightState(LightState.Red);
     }
 
     /// <summary>
@@ -95,25 +100,17 @@ public class TrafficLightControl : MonoBehaviour
 
         if (oppositeTrafficLight != null)
         {
-            oppositeTrafficLight
-                .SetButtonPressed(true);
+            oppositeTrafficLight.SetButtonPressed(true);
         }
 
-        PlaySound(
-            buttonClickSFX
-        );
+        PlaySound(buttonClickSFX);
 
         if (trafficLightCoroutine != null)
         {
-            StopCoroutine(
-                trafficLightCoroutine
-            );
+            StopCoroutine(trafficLightCoroutine);
         }
 
-        trafficLightCoroutine =
-            StartCoroutine(
-                TrafficLightSequence()
-            );
+        trafficLightCoroutine = StartCoroutine(TrafficLightSequence());
     }
 
     /// <summary>
@@ -123,36 +120,23 @@ public class TrafficLightControl : MonoBehaviour
     /// </summary>
     private IEnumerator TrafficLightSequence()
     {
-        SetBothLights(
-            LightState.Red
-        );
+        SetBothLights(LightState.Red);
 
-        yield return new WaitForSeconds(
-            delayBeforeGreen
-        );
+        yield return new WaitForSeconds(delayBeforeGreen);
 
-        SetBothLights(
-            LightState.Green
-        );
+        SetBothLights(LightState.Green);
 
-        PlaySound(
-            greenBeepSFX
-        );
+        PlaySound(greenBeepSFX);
 
-        yield return new WaitForSeconds(
-            greenDuration
-        );
+        yield return new WaitForSeconds(greenDuration);
 
-        SetBothLights(
-            LightState.Red
-        );
+        SetBothLights(LightState.Red);
 
         buttonPressed = false;
 
         if (oppositeTrafficLight != null)
         {
-            oppositeTrafficLight
-                .SetButtonPressed(false);
+            oppositeTrafficLight.SetButtonPressed(false);
         }
 
         trafficLightCoroutine = null;
@@ -162,17 +146,13 @@ public class TrafficLightControl : MonoBehaviour
     /// Changes this traffic light and its paired
     /// traffic light to the same state.
     /// </summary>
-    public void SetBothLights(
-        LightState state)
+    public void SetBothLights(LightState state)
     {
-        SetLightState(
-            state
-        );
+        SetLightState(state);
 
         if (oppositeTrafficLight != null)
         {
-            oppositeTrafficLight
-                .SetLightState(state);
+            oppositeTrafficLight.SetLightState(state);
         }
     }
 
@@ -180,23 +160,18 @@ public class TrafficLightControl : MonoBehaviour
     /// Changes this individual traffic light's
     /// red and green visual objects.
     /// </summary>
-    public void SetLightState(
-        LightState state)
+    public void SetLightState(LightState state)
     {
         currentState = state;
 
         if (redLightObject != null)
         {
-            redLightObject.SetActive(
-                state == LightState.Red
-            );
+            redLightObject.SetActive(state == LightState.Red);
         }
 
         if (greenLightObject != null)
         {
-            greenLightObject.SetActive(
-                state == LightState.Green
-            );
+            greenLightObject.SetActive(state == LightState.Green);
         }
     }
 
@@ -204,26 +179,28 @@ public class TrafficLightControl : MonoBehaviour
     /// Updates the internal crossing-button state
     /// for the paired traffic light.
     /// </summary>
-    private void SetButtonPressed(
-        bool pressed)
+    private void SetButtonPressed(bool pressed)
     {
         buttonPressed = pressed;
     }
 
     /// <summary>
-    /// Plays a traffic-light sound.
+    /// Plays a traffic-light sound clip.
     /// </summary>
-    private void PlaySound(
-        AudioClip audioClip)
+    public void PlaySound(AudioClip audioClip)
     {
-        if (audioSource == null ||
-            audioClip == null)
+        if (audioSource == null)
         {
+            Debug.LogWarning($"[TrafficLightControl] AudioSource component missing on {gameObject.name}!", this);
             return;
         }
 
-        audioSource.PlayOneShot(
-            audioClip
-        );
+        if (audioClip == null)
+        {
+            Debug.LogWarning($"[TrafficLightControl] AudioClip is unassigned on {gameObject.name}!", this);
+            return;
+        }
+
+        audioSource.PlayOneShot(audioClip);
     }
 }
