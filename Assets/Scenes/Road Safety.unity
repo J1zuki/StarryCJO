@@ -7689,6 +7689,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8453615409944103534, guid: e1f3fe09581c1bb4fb84dd017dac7a60, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 8453615409944103534, guid: e1f3fe09581c1bb4fb84dd017dac7a60, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 161.28
+      objectReference: {fileID: 0}
     - target: {fileID: 8902849322642411386, guid: e1f3fe09581c1bb4fb84dd017dac7a60, type: 3}
       propertyPath: m_Name
       value: Bus and Car Movement
