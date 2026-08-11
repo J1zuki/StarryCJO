@@ -14,7 +14,7 @@ public class BusMovement : MonoBehaviour
     public Transform RightLanePoint;
     public Transform BusEndPoint;
 
-    public float speed = 7f;  //speed of the bus
+    public float speed = 8f;  //speed of the bus
     public float waitTime = 20f; //time to wait at the bus stop
     public float trafficWaitTime = 10f; //time to wait at the traffic light
     private int stage = 0;
