@@ -1,3 +1,15 @@
+/*
+ * Author: Joyce Kwek
+ * Date: 12th August 2026
+ * File: JaywalkingTrigger.cs
+ * Description:
+ * Detects when the player enters the jaywalking detection area.
+ * When triggered, the script commands the police officer
+ * to intercept the player by moving towards the assigned stop point.
+ * The trigger is disabled after a successful interception begins
+ * so that it cannot be activated repeatedly.
+ */
+
 using UnityEngine;
 
 /// <summary>

@@ -1,3 +1,14 @@
+/*
+ * Author: Joyce Kwek
+ * Date: 12th August 2026
+ * File: DialogueUI.cs
+ * Description:
+ * Controls the dialogue user interface for NPC interactions.
+ * The script opens and closes the dialogue panel,
+ * displays dialogue text, manages cursor visibility,
+ * and handles the Shop, Talk, and Leave button actions.
+ */
+
 using UnityEngine;
 using TMPro;
 

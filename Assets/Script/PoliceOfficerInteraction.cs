@@ -1,3 +1,16 @@
+/*
+ * Author: Joyce Kwek
+ * Date: 12th August 2026
+ * File: PoliceOfficerInteraction.cs
+ * Description:
+ * Controls the player's interaction and conversation with the
+ * police officer. The script displays the interaction prompt,
+ * manages dialogue choices and response buttons, shows the
+ * Game Over panel after the conversation is completed, and
+ * teleports the player to the next mission spawn point.
+ * It also disables and restores player controls during dialogue.
+ */
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;

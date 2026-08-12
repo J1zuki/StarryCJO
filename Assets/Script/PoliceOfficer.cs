@@ -1,3 +1,15 @@
+/*
+ * Author: Joyce Kwek
+ * Date: 12th August 2026
+ * File: PoliceOfficer.cs
+ * Description:
+ * Controls the police officer's movement and behaviour using
+ * a NavMeshAgent. The officer moves towards the assigned stop point
+ * when the player is detected jaywalking, stops when the destination
+ * is reached, faces the player, updates movement animations,
+ * and allows player interaction after arriving.
+ */
+
 using UnityEngine;
 using UnityEngine.AI;
 
