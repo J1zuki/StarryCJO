@@ -1,5 +1,5 @@
 /*
- * Author: Cylina Ho & Joyce Kwek
+ * Author: Joyce Kwek
  * Date: 12th August 2026
  * File: DialogueUI.cs
  * Description:
