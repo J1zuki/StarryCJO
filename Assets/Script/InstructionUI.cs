@@ -17,23 +17,6 @@ using UnityEngine.UI;
 /// </summary>
 
 public class InstructionUI : MonoBehaviour
-Here is an updated InstructionUIController.cs script that runs continuously during gameplay without needing any close button.  It shows the instruction panel during normal play and automatically hides it whenever any panel in your panelsToHideFor list (like gameOverPanel or completionCanvas) is active. If those panels close, the instructions will automatically show up again.  C#/*
- * Author: Joyce Kwek
- * Date: 12th August 2026
- * File: InstructionUIController.cs
- * Description:
- * Controls the display of the in-game Instruction Screen UI.
- * Automatically hides instructions whenever a Game Over or End-Game panel 
- * is active, and shows them again when no end panels are active.
- */
-
-using UnityEngine;
-
-/// <summary>
-/// Controls an in-game instruction screen, automatically hiding it
-/// whenever any designated end-game panel is displayed.
-/// </summary>
-public class InstructionUIController : MonoBehaviour
 {
     [Header("Instruction Panel UI")]
     [SerializeField] private GameObject instructionPanel;
