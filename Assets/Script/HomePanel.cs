@@ -5,37 +5,33 @@
  * Description:
  * Manages the main Home Panel UI.
  * Keeps the home screen open on start, unlocks the mouse cursor,
- * and hides the home screen (and shows instructions/gameplay) 
- * once the player presses the Start button.
+ * and hides the home screen once the player presses the Start button.
  */
 
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Controls the opening Home Panel screen and handles 
-/// starting the game when the Start button is pressed.
-/// </summary>
 public class HomePanel : MonoBehaviour
 {
     [Header("Home UI Setup")]
+    [Tooltip("Assign the Home Panel GameObject (or leave null if attached to the main UI root).")]
     [SerializeField] private GameObject homePanel;
     [SerializeField] private Button startButton;
 
     [Header("Instruction UI Setup")]
+    [Tooltip("Assign Instruction Panel if present, otherwise leave empty.")]
     [SerializeField] private GameObject instructionPanel;
 
     [Header("Audio Setup")]
-    [Tooltip("Assign the AudioSource playing your background music (from PlayerCapsule).")]
+    [Tooltip("Assign the AudioSource playing background music (from PlayerCapsule).")]
     [SerializeField] private AudioSource backgroundMusic;
 
     [Header("Player Control")]
-    [Tooltip("Assign player movement scripts to disable while on the home panel.")]
+    [Tooltip("Assign player movement scripts (e.g. StarterAssetsInputs / PlayerController) to disable while menu is open.")]
     [SerializeField] private Behaviour[] playerControlsToDisable;
 
     private void Awake()
     {
-        // Bind button listener early in Awake to avoid missing the first click
         if (startButton != null)
         {
             startButton.onClick.RemoveAllListeners();
@@ -50,65 +46,62 @@ public class HomePanel : MonoBehaviour
             Debug.LogError("HomePanel: Start Button is NOT assigned in the Inspector!", gameObject);
         }
 
-        // Keep home panel open initially
+        // Show main home screen UI
         if (homePanel != null)
         {
             homePanel.SetActive(true);
         }
 
-        // Hide instruction panel until player presses Start
+        // Hide instruction panel on startup
         if (instructionPanel != null)
         {
             instructionPanel.SetActive(false);
         }
 
-        // Ensure background music is stopped or paused at game startup
+        // Stop music at launch
         if (backgroundMusic != null)
         {
-            backgroundMusic.Stop(); // Use Stop instead of Pause so Play() restarts fresh
+            backgroundMusic.Stop();
         }
 
         DisablePlayerControl();
 
-        // Unlock mouse cursor for UI navigation
+        // Unlock mouse cursor for UI selection
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
     /// <summary>
-    /// Called when the player clicks the Start button.
-    /// Hides home screen, plays music, shows instructions, and restores player movement.
+    /// Called when Start button is clicked.
+    /// Hides menu UI, starts BGM, enables player controls, and locks cursor for gameplay.
     /// </summary>
     public void OnStartButtonPressed()
     {
-        // Hide the Home Panel
+        // 1. Play background music
+        if (backgroundMusic != null && !backgroundMusic.isPlaying)
+        {
+            backgroundMusic.Play();
+        }
+
+        // 2. Enable gameplay controls
+        EnablePlayerControl();
+
+        // 3. Lock cursor for First-Person / Third-Person gameplay view
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // 4. Hide Home UI Panel
         if (homePanel != null)
         {
             homePanel.SetActive(false);
         }
-
-        // Show Instruction panel
-        if (instructionPanel != null)
+        else
         {
-            instructionPanel.SetActive(true);
+            // If homePanel slot is unassigned, deactivate this panel root
+            gameObject.SetActive(false);
         }
 
-        // Play background music
-        if (backgroundMusic != null)
-        {
-            if (!backgroundMusic.isPlaying)
-            {
-                backgroundMusic.Play();
-            }
-        }
-
-        EnablePlayerControl();
-
-        // Lock cursor for gameplay (or keep unlocked if instruction panel requires cursor)
-        Cursor.lockState = CursorLockMode.None; // Set to CursorLockMode.Locked when gameplay actually begins
-        Cursor.visible = true;
-
-        Debug.Log("Game Started: Home Panel closed, music playing.", gameObject);
+        Debug.Log("Game Started: Menu closed, player control enabled, BGM playing.", gameObject);
     }
 
     private void DisablePlayerControl()

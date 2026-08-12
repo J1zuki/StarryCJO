@@ -186,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 276459742}
   - component: {fileID: 276459741}
   m_Layer: 5
-  m_Name: Welcome
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -707,7 +707,7 @@ GameObject:
   - component: {fileID: 736227061}
   - component: {fileID: 736227060}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -746,7 +746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -892,8 +892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   homePanel: {fileID: 221134131}
   startButton: {fileID: 1801085239}
-  instructionPanel: {fileID: 0}
-  backgroundMusic: {fileID: 0}
+  backgroundMusic: {fileID: 1463891816}
   playerControlsToDisable: []
 --- !u!114 &815096088 stripped
 MonoBehaviour:
