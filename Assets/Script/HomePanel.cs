@@ -18,10 +18,6 @@ public class HomePanel : MonoBehaviour
     [SerializeField] private GameObject homePanel;
     [SerializeField] private Button startButton;
 
-    [Header("Instruction UI Setup")]
-    [Tooltip("Assign Instruction Panel if present, otherwise leave empty.")]
-    [SerializeField] private GameObject instructionPanel;
-
     [Header("Audio Setup")]
     [Tooltip("Assign the AudioSource playing background music (from PlayerCapsule).")]
     [SerializeField] private AudioSource backgroundMusic;
@@ -50,12 +46,6 @@ public class HomePanel : MonoBehaviour
         if (homePanel != null)
         {
             homePanel.SetActive(true);
-        }
-
-        // Hide instruction panel on startup
-        if (instructionPanel != null)
-        {
-            instructionPanel.SetActive(false);
         }
 
         // Stop music at launch
