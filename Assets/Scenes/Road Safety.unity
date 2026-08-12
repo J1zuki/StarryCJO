@@ -486,7 +486,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 356, y: 25}
+  m_AnchoredPosition: {x: 356, y: 76}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &375938327
@@ -518,8 +518,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294919936
-  m_fontColor: {r: 0, g: 0.2796309, b: 1, a: 1}
+    rgba: 4286863660
+  m_fontColor: {r: 0.17254902, g: 0.34901962, b: 0.5176471, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -782,6 +782,7 @@ GameObject:
   - component: {fileID: 778196123}
   - component: {fileID: 778196122}
   - component: {fileID: 778196121}
+  - component: {fileID: 778196125}
   m_Layer: 5
   m_Name: HomeScreen
   m_TagString: Untagged
@@ -877,6 +878,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &778196125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778196120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f17ff2d354e43d4aad9a0b258d2b265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  homePanel: {fileID: 221134131}
+  startButton: {fileID: 1801085239}
+  instructionPanel: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  playerControlsToDisable: []
 --- !u!114 &815096088 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6970284209220270427, guid: b4627c28266882a499e5014a457b1057, type: 3}
@@ -1088,6 +1106,7 @@ MonoBehaviour:
   panelsToHideFor:
   - {fileID: 2004198443670793904}
   - {fileID: 215620850}
+  - {fileID: 778196120}
 --- !u!1 &951427336
 GameObject:
   m_ObjectHideFlags: 0
@@ -6549,7 +6568,7 @@ GameObject:
   - component: {fileID: 1801085240}
   - component: {fileID: 1801085239}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Start Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -22,29 +22,50 @@ public class HomePanel : MonoBehaviour
     [SerializeField] private GameObject homePanel;
     [SerializeField] private Button startButton;
 
+    [Header("Instruction UI Setup")]
+    [SerializeField] private GameObject instructionPanel;
+
+    [Header("Audio Setup")]
+    [Tooltip("Assign the AudioSource playing your background music (from PlayerCapsule).")]
+    [SerializeField] private AudioSource backgroundMusic;
+
     [Header("Player Control")]
-    [Tooltip("Assign player control scripts here to freeze the player while the Home Panel is active.")]
+    [Tooltip("Assign player movement scripts to disable while on the home panel.")]
     [SerializeField] private Behaviour[] playerControlsToDisable;
 
-    /// <summary>
-    /// Configures start button events, shows the Home Panel,
-    /// and pauses player inputs when the scene begins.
-    /// </summary>
-    private void Start()
+    private void Awake()
     {
+        // Bind button listener early in Awake to avoid missing the first click
         if (startButton != null)
         {
+            startButton.onClick.RemoveAllListeners();
             startButton.onClick.AddListener(OnStartButtonPressed);
         }
-        else
+    }
+
+    private void Start()
+    {
+        if (startButton == null)
         {
-            Debug.LogWarning("HomePanelController: Start Button has not been assigned.", gameObject);
+            Debug.LogError("HomePanel: Start Button is NOT assigned in the Inspector!", gameObject);
         }
 
-        // Show home panel initially
+        // Keep home panel open initially
         if (homePanel != null)
         {
             homePanel.SetActive(true);
+        }
+
+        // Hide instruction panel until player presses Start
+        if (instructionPanel != null)
+        {
+            instructionPanel.SetActive(false);
+        }
+
+        // Ensure background music is stopped or paused at game startup
+        if (backgroundMusic != null)
+        {
+            backgroundMusic.Stop(); // Use Stop instead of Pause so Play() restarts fresh
         }
 
         DisablePlayerControl();
@@ -56,7 +77,7 @@ public class HomePanel : MonoBehaviour
 
     /// <summary>
     /// Called when the player clicks the Start button.
-    /// Hides the Home Panel, enables gameplay controls, and locks the cursor.
+    /// Hides home screen, plays music, shows instructions, and restores player movement.
     /// </summary>
     public void OnStartButtonPressed()
     {
@@ -66,24 +87,33 @@ public class HomePanel : MonoBehaviour
             homePanel.SetActive(false);
         }
 
+        // Show Instruction panel
+        if (instructionPanel != null)
+        {
+            instructionPanel.SetActive(true);
+        }
+
+        // Play background music
+        if (backgroundMusic != null)
+        {
+            if (!backgroundMusic.isPlaying)
+            {
+                backgroundMusic.Play();
+            }
+        }
+
         EnablePlayerControl();
 
-        // Lock and hide cursor for gameplay
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // Lock cursor for gameplay (or keep unlocked if instruction panel requires cursor)
+        Cursor.lockState = CursorLockMode.None; // Set to CursorLockMode.Locked when gameplay actually begins
+        Cursor.visible = true;
 
-        Debug.Log("Game Started: Home Panel closed.", gameObject);
+        Debug.Log("Game Started: Home Panel closed, music playing.", gameObject);
     }
 
-    /// <summary>
-    /// Disables player movement scripts while on the home panel.
-    /// </summary>
     private void DisablePlayerControl()
     {
-        if (playerControlsToDisable == null)
-        {
-            return;
-        }
+        if (playerControlsToDisable == null) return;
 
         foreach (Behaviour playerControl in playerControlsToDisable)
         {
@@ -94,15 +124,9 @@ public class HomePanel : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Enables player movement scripts once the game starts.
-    /// </summary>
     private void EnablePlayerControl()
     {
-        if (playerControlsToDisable == null)
-        {
-            return;
-        }
+        if (playerControlsToDisable == null) return;
 
         foreach (Behaviour playerControl in playerControlsToDisable)
         {
@@ -113,9 +137,6 @@ public class HomePanel : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Removes button listeners when this script is destroyed.
-    /// </summary>
     private void OnDestroy()
     {
         if (startButton != null)
