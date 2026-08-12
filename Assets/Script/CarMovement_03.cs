@@ -1,3 +1,14 @@
+/*
+ * Author: Olivia Tan
+ * Date: 12th August 2026
+ * File: CarMovement_03.cs
+ * Description:
+ * Controls the movement of the third car in the road scene.
+ * The car starts moving immediately when the game begins
+ * and continues towards its designated end point.
+ * Once the car reaches the end point, it stops moving.
+ */
+
 using UnityEngine;
 
 /// <summary>

@@ -1,3 +1,18 @@
+/*
+ * Author: Olivia Tan
+ * Date: 12th August 2026
+ * File: CarMovement_01.cs
+ * Description:
+ * Controls the movement of the first car in the road scene.
+ * The car moves towards a traffic light stop point,
+ * waits for a set amount of time, then continues
+ * towards its final end point.
+ *
+ * The script also uses canLeaveTraffic to signal
+ * another car when this car is allowed to leave
+ * the traffic light.
+ */
+
 using UnityEngine;
 using System.Collections;
 /// <summary>

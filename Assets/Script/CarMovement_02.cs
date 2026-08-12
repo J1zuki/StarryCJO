@@ -1,3 +1,14 @@
+/*
+ * Author: Olivia Tan
+ * Date: 12th August 2026
+ * File: CarMovement_02.cs
+ * Description:
+ * Controls the movement of the second car in the road scene.
+ * The second car waits at the traffic light until the first car
+ * is allowed to leave, then moves together with the first car
+ * towards its designated end point.
+ */
+
 using UnityEngine;
 
 /// <summary>
