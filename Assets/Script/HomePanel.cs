@@ -14,16 +14,13 @@ using UnityEngine.UI;
 public class HomePanel : MonoBehaviour
 {
     [Header("Home UI Setup")]
-    [Tooltip("Assign the Home Panel GameObject (or leave null if attached to the main UI root).")]
     [SerializeField] private GameObject homePanel;
     [SerializeField] private Button startButton;
 
     [Header("Audio Setup")]
-    [Tooltip("Assign the AudioSource playing background music (from PlayerCapsule).")]
     [SerializeField] private AudioSource backgroundMusic;
 
     [Header("Player Control")]
-    [Tooltip("Assign player movement scripts (e.g. StarterAssetsInputs / PlayerController) to disable while menu is open.")]
     [SerializeField] private Behaviour[] playerControlsToDisable;
 
     private void Awake()
@@ -37,18 +34,6 @@ public class HomePanel : MonoBehaviour
 
     private void Start()
     {
-        if (startButton == null)
-        {
-            Debug.LogError("HomePanel: Start Button is NOT assigned in the Inspector!", gameObject);
-        }
-
-        // Show main home screen UI
-        if (homePanel != null)
-        {
-            homePanel.SetActive(true);
-        }
-
-        // Stop music at launch
         if (backgroundMusic != null)
         {
             backgroundMusic.Stop();
@@ -56,15 +41,10 @@ public class HomePanel : MonoBehaviour
 
         DisablePlayerControl();
 
-        // Unlock mouse cursor for UI selection
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
-    /// <summary>
-    /// Called when Start button is clicked.
-    /// Hides menu UI, starts BGM, enables player controls, and locks cursor for gameplay.
-    /// </summary>
     public void OnStartButtonPressed()
     {
         // 1. Play background music
@@ -73,58 +53,42 @@ public class HomePanel : MonoBehaviour
             backgroundMusic.Play();
         }
 
-        // 2. Enable gameplay controls
+        // 2. Enable player controls for gameplay
         EnablePlayerControl();
 
-        // 3. Lock cursor for First-Person / Third-Person gameplay view
+        // 3. Lock mouse cursor for FPS/3rd person control
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // 4. Hide Home UI Panel
+        // 4. Turn off the home screen
         if (homePanel != null)
         {
             homePanel.SetActive(false);
         }
         else
         {
-            // If homePanel slot is unassigned, deactivate this panel root
+            // Fallback if homePanel wasn't assigned in inspector
             gameObject.SetActive(false);
         }
 
-        Debug.Log("Game Started: Menu closed, player control enabled, BGM playing.", gameObject);
+        Debug.Log("Game Started!");
     }
 
     private void DisablePlayerControl()
     {
         if (playerControlsToDisable == null) return;
-
-        foreach (Behaviour playerControl in playerControlsToDisable)
+        foreach (Behaviour c in playerControlsToDisable)
         {
-            if (playerControl != null)
-            {
-                playerControl.enabled = false;
-            }
+            if (c != null) c.enabled = false;
         }
     }
 
     private void EnablePlayerControl()
     {
         if (playerControlsToDisable == null) return;
-
-        foreach (Behaviour playerControl in playerControlsToDisable)
+        foreach (Behaviour c in playerControlsToDisable)
         {
-            if (playerControl != null)
-            {
-                playerControl.enabled = true;
-            }
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (startButton != null)
-        {
-            startButton.onClick.RemoveListener(OnStartButtonPressed);
+            if (c != null) c.enabled = true;
         }
     }
 }
