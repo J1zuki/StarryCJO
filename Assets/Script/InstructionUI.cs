@@ -1,7 +1,7 @@
 /*
  * Author: Cylina ho
  * Date: 12th August 2026
- * File: InstructionUIController.cs
+ * File: InstructionUI.cs
  * Description:
  * Controls the display of the Instruction Screen UI.
  * Automatically hides the instructions if any game over, completion,
