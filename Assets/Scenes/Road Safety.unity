@@ -300,6 +300,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1610131730928860406, guid: acf769e7eba5ec047b65e8cbabcb728a, type: 3}
   m_PrefabInstance: {fileID: 2749727595880069313}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &778196126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778196120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fa1d14ae6f26740a9af6af4f452267, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HomeScreenBGM
+  homeScreenBGM: {fileID: 1864838807}
 --- !u!114 &815096088 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6970284209220270427, guid: b4627c28266882a499e5014a457b1057, type: 3}
@@ -5677,6 +5690,11 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!82 &1864838807 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8307964220716890052, guid: d122cd66e6930ca41be7ea5d061325ba, type: 3}
+  m_PrefabInstance: {fileID: 1912666982149956583}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1866726861 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1517595835344684130, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
@@ -5816,6 +5834,10 @@ PrefabInstance:
     - target: {fileID: 4932991971088702569, guid: d122cd66e6930ca41be7ea5d061325ba, type: 3}
       propertyPath: m_Name
       value: Music BGM
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307964220716890052, guid: d122cd66e6930ca41be7ea5d061325ba, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6720,7 +6742,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1610131730928860406, guid: acf769e7eba5ec047b65e8cbabcb728a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 778196126}
   m_SourcePrefab: {fileID: 100100000, guid: acf769e7eba5ec047b65e8cbabcb728a, type: 3}
 --- !u!1001 &3440728319604134058
 PrefabInstance:
@@ -6978,7 +7003,7 @@ PrefabInstance:
     - target: {fileID: 8593347447915969884, guid: eed4e72bd000f604396097f4d48cd740, type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 5719df2fadd856640b949ff0d97058a2, type: 2}
+      objectReference: {fileID: 23800000, guid: 17cdf185733d1334a8c8122959417a48, type: 2}
     - target: {fileID: 8593347447915969884, guid: eed4e72bd000f604396097f4d48cd740, type: 3}
       propertyPath: m_UseGeometry
       value: 0
