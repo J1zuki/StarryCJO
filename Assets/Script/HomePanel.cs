@@ -3,13 +3,13 @@
  * Date: 12th August 2026
  * File: HomePanel.cs
  * Description:
- * Manages the main Home Panel UI.
- * Keeps the home screen open on start, unlocks the mouse cursor,
- * and hides the home screen once the player presses the Start button.
+ * Directly checks for mouse clicks over the Start Button in Update()
+ * using Unity's New Input System.
  */
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem; // Required for New Input System
 
 public class HomePanel : MonoBehaviour
 {
@@ -23,17 +23,16 @@ public class HomePanel : MonoBehaviour
     [Header("Player Control")]
     [SerializeField] private Behaviour[] playerControlsToDisable;
 
-    private void Awake()
-    {
-        if (startButton != null)
-        {
-            startButton.onClick.RemoveAllListeners();
-            startButton.onClick.AddListener(OnStartButtonPressed);
-        }
-    }
+    private RectTransform startButtonRect;
+    private bool isStarted = false;
 
     private void Start()
     {
+        if (startButton != null)
+        {
+            startButtonRect = startButton.GetComponent<RectTransform>();
+        }
+
         if (backgroundMusic != null)
         {
             backgroundMusic.Stop();
@@ -45,33 +44,47 @@ public class HomePanel : MonoBehaviour
         Cursor.visible = true;
     }
 
-    public void OnStartButtonPressed()
+    private void Update()
     {
-        // 1. Play background music
+        if (isStarted) return;
+
+        // Detect left mouse click using New Input System
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Vector2 mousePosition = Mouse.current.position.ReadValue();
+
+            // Check if click was over the Start Button screen bounds
+            if (startButtonRect != null && RectTransformUtility.RectangleContainsScreenPoint(startButtonRect, mousePosition))
+            {
+                ClosePageAndStart();
+            }
+        }
+    }
+
+    private void ClosePageAndStart()
+    {
+        isStarted = true;
+
         if (backgroundMusic != null && !backgroundMusic.isPlaying)
         {
             backgroundMusic.Play();
         }
 
-        // 2. Enable player controls for gameplay
         EnablePlayerControl();
 
-        // 3. Lock mouse cursor for FPS/3rd person control
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // 4. Turn off the home screen
         if (homePanel != null)
         {
             homePanel.SetActive(false);
         }
         else
         {
-            // Fallback if homePanel wasn't assigned in inspector
             gameObject.SetActive(false);
         }
 
-        Debug.Log("Game Started!");
+        Debug.Log("Start pressed: Home page closed via New Input System!");
     }
 
     private void DisablePlayerControl()
