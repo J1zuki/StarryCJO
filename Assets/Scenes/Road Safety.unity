@@ -6562,13 +6562,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 311995823086964016, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2004198443670793909}
   m_SourcePrefab: {fileID: 100100000, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
 --- !u!1 &2004198443670793904 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 311995823086964016, guid: 34f9166eeddff114ab88911a841f1d96, type: 3}
   m_PrefabInstance: {fileID: 2004198443670793902}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2004198443670793909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004198443670793904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57aada0c5be868246b93c022cce5b15c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CompletionBGM
+  mainBGM: {fileID: 1463891816}
+  completionBGM: {fileID: 544417666}
 --- !u!1001 &2224169386312763778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6765,7 +6782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3152357826706705916, guid: b4627c28266882a499e5014a457b1057, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599149692759554470, guid: b4627c28266882a499e5014a457b1057, type: 3}
       propertyPath: m_StaticEditorFlags
