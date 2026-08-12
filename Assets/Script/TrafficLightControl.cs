@@ -1,5 +1,5 @@
 /*
- * Author: Joyce Kwek
+ * Author: Cylina Ho & Joyce Kwek 
  * Date: 11th August 2026
  * File: TrafficLightControl.cs
  * Description:
