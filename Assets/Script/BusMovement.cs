@@ -1,3 +1,11 @@
+/*
+ * Author: Olivia Tan
+ * Date: 10th August 2026
+ * File: BusStopCrossPoint.cs
+ * Description:
+ * Detects the bus to move forward to a certain start and end point.
+ */
+
 using UnityEngine;
 using System.Collections;
 /// <summary>
