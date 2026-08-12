@@ -1,5 +1,5 @@
 /*
- * Author: Joyce Kwek
+ * Author: Cylina ho
  * Date: 12th August 2026
  * File: HomePanel.cs
  * Description:
@@ -22,11 +22,7 @@ public class HomePanel : MonoBehaviour
     [SerializeField] private GameObject homePanel;
     [SerializeField] private Button startButton;
 
-    [Header("Optional UI to Trigger on Start")]
-    [Tooltip("Assign your Instruction Screen GameObject if you want it to appear right after pressing Start.")]
-    [SerializeField] private GameObject instructionPanel;
-
-    [Header("Optional Player Control")]
+    [Header("Player Control")]
     [Tooltip("Assign player control scripts here to freeze the player while the Home Panel is active.")]
     [SerializeField] private Behaviour[] playerControlsToDisable;
 
@@ -51,12 +47,6 @@ public class HomePanel : MonoBehaviour
             homePanel.SetActive(true);
         }
 
-        // Hide instruction panel until player starts
-        if (instructionPanel != null)
-        {
-            instructionPanel.SetActive(false);
-        }
-
         DisablePlayerControl();
 
         // Unlock mouse cursor for UI navigation
@@ -66,7 +56,7 @@ public class HomePanel : MonoBehaviour
 
     /// <summary>
     /// Called when the player clicks the Start button.
-    /// Hides the Home Panel, enables instructions/gameplay, and locks the cursor.
+    /// Hides the Home Panel, enables gameplay controls, and locks the cursor.
     /// </summary>
     public void OnStartButtonPressed()
     {
@@ -74,12 +64,6 @@ public class HomePanel : MonoBehaviour
         if (homePanel != null)
         {
             homePanel.SetActive(false);
-        }
-
-        // Show the instruction panel if assigned
-        if (instructionPanel != null)
-        {
-            instructionPanel.SetActive(true);
         }
 
         EnablePlayerControl();
