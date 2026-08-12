@@ -7103,6 +7103,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 61138733113578149, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 323146413720099274, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1717085220864918251, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1899036628081216213, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
       propertyPath: promptText
       value: 
@@ -7111,6 +7123,26 @@ PrefabInstance:
       propertyPath: promptPanel
       value: 
       objectReference: {fileID: 414071220}
+    - target: {fileID: 2009628108209672201, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2967022544449516661, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384904102950038121, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4654243521659511678, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914007167789918225, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5795233084944204952, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
       propertyPath: m_LocalPosition.x
       value: -302.57
@@ -7151,6 +7183,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5998642732416759903, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6407814198157398712, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
       propertyPath: m_Name
       value: UpperRoad
@@ -7163,6 +7199,18 @@ PrefabInstance:
       propertyPath: promptPanel
       value: 
       objectReference: {fileID: 414071220}
+    - target: {fileID: 6847890619817110205, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643350160886370525, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7910503929847926465, guid: 253552c918c64df4a82c6cdbc5b6d586, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
