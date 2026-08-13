@@ -40,8 +40,6 @@ The player progresses through the level by:
 11. Performing the safe-crossing sequence.
 12. Reaching the bus stop to complete the level.
 
-Successful completion awards the player **100 points**.
-
 ---
 
 ## Design Process
@@ -71,8 +69,6 @@ Important environmental elements include:
 * Store Owner NPC
 * Girl NPC
 * Bus stop
-
-The level layout guides the player naturally from the starting area towards increasingly important road-safety interactions.
 
 ---
 
@@ -149,7 +145,85 @@ The main gameplay progression is:
 | **B**             | Use Pedestrian Traffic Light   |
 | **UI Buttons**    | Start, Continue, Next and Quit |
 
-The game also displays an instruction panel during gameplay to remind the player of the main objectives and interaction controls.
+---
+
+# FSM
+                    ┌──────────────┐
+                    │  MAIN MENU   │
+                    └──────┬───────┘
+                           │ Start
+                           ▼
+                 ┌──────────────────┐
+                 │ EXPLORE HDB AREA │
+                 └────────┬─────────┘
+                          │ Approach Store Owner
+                          ▼
+                ┌────────────────────┐
+                │ TALK TO STORE OWNER│
+                └─────────┬──────────┘
+                          │ Dialogue Complete
+                          ▼
+                   ┌──────────────┐
+                   │ JAYWALK TEST │
+                   └──────┬───────┘
+                          │ Jaywalk
+                          ▼
+               ┌─────────────────────┐
+               │ JAYWALKING FEEDBACK │
+               │   / FAILURE STATE   │
+               └──────────┬──────────┘
+                          │ Continue
+                          ▼
+                ┌───────────────────┐
+                │ TALK TO POLICE NPC│
+                └─────────┬─────────┘
+                          │ Dialogue Complete
+                          ▼
+                 ┌──────────────────┐
+                 │ GO TO CROSSING   │
+                 └────────┬─────────┘
+                          │ Reach Crossing
+                          ▼
+               ┌─────────────────────┐
+               │ WATCH NPC CROSSING  │
+               └──────────┬──────────┘
+                          │ Demonstration Ends
+                          ▼
+                ┌────────────────────┐
+                │ TRAFFIC LIGHT STATE│
+                └─────────┬──────────┘
+                          │ Press B
+                          ▼
+                    ┌───────────┐
+                    │ WAIT RED  │
+                    └─────┬─────┘
+                          │ Signal Changes
+                          ▼
+                   ┌────────────┐
+                   │ GREEN LIGHT│
+                   └─────┬──────┘
+                         │ Safe to Continue
+                         ▼
+                  ┌────────────────┐
+                  │ TALK TO GIRL NPC│
+                  └───────┬────────┘
+                          │ Dialogue Complete
+                          ▼
+                 ┌──────────────────┐
+                 │  SAFE CROSSING   │
+                 └────────┬─────────┘
+                          │ Reach Other Side
+                          ▼
+                   ┌─────────────┐
+                   │ GO TO BUS   │
+                   │    STOP     │
+                   └──────┬──────┘
+                          │ Reach Destination
+                          ▼
+                  ┌────────────────┐
+                  │ LEVEL COMPLETE │
+                  │  +100 POINTS   │
+                  └────────────────┘
 
 ---
 
@@ -272,7 +346,6 @@ The current prototype contains the main gameplay and road-safety learning experi
 ---
 
 # Game Mechanics
-
 ## NPC Interaction
 The player approaches designated NPCs and presses **E** to begin an interaction.
 NPC interactions are used to provide information and progress the player through the learning sequence.
@@ -331,7 +404,6 @@ Unsafe behaviour results in corrective information, while correct behaviour even
 ---
 
 # Testing
-
 ## Player Movement Testing
 * Tested player movement around the HDB environment.
 * Checked that the player can navigate between objectives.
